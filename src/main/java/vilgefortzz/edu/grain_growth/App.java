@@ -1,7 +1,12 @@
 package vilgefortzz.edu.grain_growth;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.net.URL;
 
 /**
  * Created by vilgefortzz on 06/10/18
@@ -13,5 +18,15 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {}
+    public void start(Stage primaryStage) throws Exception {
+
+        URL layout = getClass().getClassLoader().getResource("layout.fxml");
+        if (layout == null) { throw new Exception("Cannot load a layout"); }
+
+        Parent root = FXMLLoader.load(layout);
+
+        primaryStage.setTitle("Grain growth");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
 }
