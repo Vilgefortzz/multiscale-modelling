@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vilgefortzz.edu.grain_growth.Controller">
    <children>
       <Pane prefHeight="600.0" prefWidth="340.0">
          <children>
@@ -25,8 +25,8 @@
                </font></Label>
             <Separator layoutX="19.0" layoutY="40.0" prefHeight="3.0" prefWidth="294.0" />
             <Separator layoutX="329.0" layoutY="15.0" orientation="VERTICAL" prefHeight="569.0" prefWidth="0.0" />
-            <TextField layoutX="76.0" layoutY="84.0" prefHeight="26.0" prefWidth="45.0" />
-            <TextField layoutX="177.0" layoutY="84.0" prefHeight="26.0" prefWidth="45.0" />
+            <TextField fx:id="columnsText" layoutX="76.0" layoutY="84.0" prefHeight="26.0" prefWidth="45.0" text="300" />
+            <TextField fx:id="rowsText" layoutX="177.0" layoutY="84.0" prefHeight="26.0" prefWidth="45.0" text="300" />
             <Label layoutX="14.0" layoutY="89.0" text="columns" />
             <Label layoutX="138.0" layoutY="89.0" text="rows" />
             <Separator layoutX="14.0" layoutY="153.0" prefHeight="3.0" prefWidth="294.0" />
@@ -35,46 +35,46 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ComboBox layoutX="102.0" layoutY="168.0" prefWidth="150.0" />
+            <ComboBox fx:id="algorithmComboBox" layoutX="102.0" layoutY="168.0" prefWidth="150.0" />
             <Separator layoutX="14.0" layoutY="206.0" prefHeight="3.0" prefWidth="294.0" />
             <Label layoutX="15.0" layoutY="229.0" text="Neighbourhood" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ComboBox layoutX="146.0" layoutY="225.0" prefWidth="150.0" />
+            <ComboBox fx:id="neighbourhoodComboBox" layoutX="146.0" layoutY="225.0" prefWidth="150.0" />
             <Label layoutX="13.0" layoutY="282.0" text="Nucleating" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <Separator layoutX="14.0" layoutY="268.0" prefHeight="3.0" prefWidth="294.0" />
-            <Button layoutX="117.0" layoutY="385.0" mnemonicParsing="false" text="Nucleating" textFill="#1d8d13">
+            <Button fx:id="nucleatingButton" onAction="#nucleating" disable="true" layoutX="117.0" layoutY="385.0" mnemonicParsing="false" text="Nucleating" textFill="#1d8d13">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <ComboBox layoutX="56.0" layoutY="307.0" prefHeight="26.0" prefWidth="150.0" />
+            <ComboBox fx:id="nucleatingComboBox" layoutX="56.0" layoutY="307.0" prefHeight="26.0" prefWidth="150.0" />
             <Label layoutX="16.0" layoutY="312.0" text="type" />
             <Label layoutX="13.0" layoutY="345.0" text="number of grains" />
-            <TextField layoutX="138.0" layoutY="340.0" prefHeight="26.0" prefWidth="55.0" />
+            <TextField fx:id="numberOfGrainsText" layoutX="138.0" layoutY="340.0" prefHeight="26.0" prefWidth="55.0" text="20" />
             <Separator layoutX="19.0" layoutY="427.0" prefHeight="3.0" prefWidth="294.0" />
             <Label layoutX="16.0" layoutY="438.0" text="Growth" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="465.0" mnemonicParsing="false" text="START" textFill="#1d8d13">
+            <Button fx:id="startButton" onAction="#start" disable="true" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" text="START" textFill="#1d8d13">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button layoutX="79.0" layoutY="465.0" mnemonicParsing="false" text="STOP" textFill="#b21717">
+            <Button fx:id="stopButton" onAction="#stop" disable="true" layoutX="79.0" layoutY="465.0" mnemonicParsing="false" text="STOP" textFill="#b21717">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button layoutX="101.0" layoutY="119.0" mnemonicParsing="false" text="Generate grid" textFill="#1f5797">
+            <Button fx:id="generateGridButton" onAction="#generateGrid" layoutX="101.0" layoutY="119.0" mnemonicParsing="false" text="Generate grid" textFill="#1f5797">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -83,7 +83,7 @@
       </Pane>
       <Pane prefHeight="600.0" prefWidth="678.0">
          <children>
-            <Canvas height="530.0" layoutX="70.0" layoutY="56.0" width="530.0" />
+            <Canvas fx:id="canvas" height="530.0" layoutX="70.0" layoutY="56.0" width="530.0" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="165.0" layoutY="14.0" prefHeight="28.0" prefWidth="340.0" text="Grain growth visualisation" textAlignment="CENTER">
                <font>
                   <Font name="Ubuntu Mono Bold" size="26.0" />
