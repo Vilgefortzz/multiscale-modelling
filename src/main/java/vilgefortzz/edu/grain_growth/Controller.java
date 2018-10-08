@@ -29,6 +29,7 @@ public class Controller implements Initializable{
      * Graphics properties
      */
     private GraphicsContext graphicsContext;
+    private final int DELAY = 100;
 
     private double width;
     private double height;
@@ -129,9 +130,9 @@ public class Controller implements Initializable{
         stepController.initialize();
         stepController.setSolver(solver);
         stepController.setOnSucceeded(
-                event -> nextStep( (Grid) event.getSource().getValue() )
+                event -> nextStep((Grid) event.getSource().getValue())
         );
-        stepController.setPeriod(Duration.millis(200));
+        stepController.setPeriod(Duration.millis(DELAY));
     }
 
     private Grid createGrid() {
