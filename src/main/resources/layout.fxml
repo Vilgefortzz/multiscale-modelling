@@ -35,7 +35,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="algorithmComboBox" layoutX="102.0" layoutY="168.0" prefWidth="150.0" />
+            <ComboBox fx:id="algorithmComboBox" layoutX="102.0" layoutY="168.0" prefHeight="26.0" prefWidth="193.0" />
             <Separator layoutX="14.0" layoutY="206.0" prefHeight="3.0" prefWidth="294.0" />
             <Label layoutX="15.0" layoutY="229.0" text="Neighbourhood" underline="true">
                <font>
@@ -49,12 +49,12 @@
                </font>
             </Label>
             <Separator layoutX="14.0" layoutY="268.0" prefHeight="3.0" prefWidth="294.0" />
-            <Button fx:id="nucleatingButton" onAction="#nucleating" disable="true" layoutX="117.0" layoutY="385.0" mnemonicParsing="false" text="Nucleating" textFill="#1d8d13">
+            <Button fx:id="nucleatingButton" disable="true" layoutX="117.0" layoutY="385.0" mnemonicParsing="false" onAction="#nucleating" text="Nucleating" textFill="#1d8d13">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <ComboBox fx:id="nucleatingComboBox" layoutX="56.0" layoutY="307.0" prefHeight="26.0" prefWidth="150.0" />
+            <ComboBox fx:id="nucleatingComboBox" layoutX="56.0" layoutY="307.0" prefHeight="26.0" prefWidth="193.0" />
             <Label layoutX="16.0" layoutY="312.0" text="type" />
             <Label layoutX="13.0" layoutY="345.0" text="number of grains" />
             <TextField fx:id="numberOfGrainsText" layoutX="138.0" layoutY="340.0" prefHeight="26.0" prefWidth="55.0" text="20" />
@@ -64,17 +64,17 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="startButton" onAction="#start" disable="true" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" text="START" textFill="#1d8d13">
+            <Button fx:id="startButton" disable="true" layoutX="14.0" layoutY="465.0" mnemonicParsing="false" onAction="#start" text="START" textFill="#1d8d13">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="stopButton" onAction="#stop" disable="true" layoutX="79.0" layoutY="465.0" mnemonicParsing="false" text="STOP" textFill="#b21717">
+            <Button fx:id="stopButton" disable="true" layoutX="79.0" layoutY="465.0" mnemonicParsing="false" onAction="#stop" text="STOP" textFill="#b21717">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="generateGridButton" onAction="#generateGrid" layoutX="101.0" layoutY="119.0" mnemonicParsing="false" text="Generate grid" textFill="#1f5797">
+            <Button fx:id="generateGridButton" layoutX="101.0" layoutY="119.0" mnemonicParsing="false" onAction="#generateGrid" text="Generate grid" textFill="#1f5797">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
