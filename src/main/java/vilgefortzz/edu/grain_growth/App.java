@@ -20,8 +20,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        URL layout = getClass().getClassLoader().getResource("layout.fxml");
-        if (layout == null) { throw new Exception("Cannot load a layout"); }
+        URL layout = getClass().getClassLoader().getResource("scene.fxml");
+        if (layout == null) { throw new Exception("Cannot load a scene layout"); }
 
         Parent root = FXMLLoader.load(layout);
 
