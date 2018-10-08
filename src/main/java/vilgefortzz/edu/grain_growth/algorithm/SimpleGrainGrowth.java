@@ -34,7 +34,7 @@ public class SimpleGrainGrowth extends Algorithm {
 
         changed = false;
         grid.forEach(c -> {
-            List<Cell> neighbours = neighbourhood.neighbours(previousGrid, c);
+            List<Cell> neighbours = neighbourhood.listWithNeighbours(previousGrid, c);
 
             if (c.getState() == 0 && anyNeighbourIsNucleating(neighbours)) {
                 int state = getMostFrequentState(neighbours);
