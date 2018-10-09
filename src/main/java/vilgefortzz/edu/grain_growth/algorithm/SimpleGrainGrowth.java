@@ -44,8 +44,6 @@ public class SimpleGrainGrowth extends Algorithm {
         });
 
         if (!changed) finished = true;
-
-        grid.setState(type);
     }
 
     @Override

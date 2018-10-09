@@ -15,8 +15,6 @@ public class Grid {
 
     private final boolean cyclic = true;
 
-    private int state;
-
     public Grid(int width, int height) {
 
         this.width = width;
@@ -78,10 +76,6 @@ public class Grid {
 
     public int getHeight() {
         return height;
-    }
-
-    public void setState(int state) {
-        this.state = state;
     }
 
     public Cell getCell(int x, int y) {
