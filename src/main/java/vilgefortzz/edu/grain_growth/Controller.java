@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import vilgefortzz.edu.grain_growth.growth.Growth;
@@ -18,6 +20,7 @@ import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
 import vilgefortzz.edu.grain_growth.grid.ColorGenerator;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -212,7 +215,9 @@ public class Controller implements Initializable{
 
     @FXML
     public void importFromFile() throws Exception {
-        throw new NotImplementedException();
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Import microstructure from file");
+        File file = chooser.showOpenDialog(new Stage());
     }
 
     @FXML
@@ -222,7 +227,9 @@ public class Controller implements Initializable{
 
     @FXML
     public void importFromBitmap() throws Exception {
-        throw new NotImplementedException();
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Import microstructure from bitmap");
+        File file = chooser.showOpenDialog(new Stage());
     }
 
     @FXML
