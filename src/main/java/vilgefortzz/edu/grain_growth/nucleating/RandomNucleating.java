@@ -1,6 +1,6 @@
 package vilgefortzz.edu.grain_growth.nucleating;
 
-import vilgefortzz.edu.grain_growth.algorithm.Algorithm;
+import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 
@@ -12,7 +12,7 @@ import java.util.Random;
 public class RandomNucleating implements Nucleating {
 
     @Override
-    public void nucleating(Algorithm algorithm, Grid grid, int numberOfGrains) {
+    public void nucleating(Growth growth, Grid grid, int numberOfGrains) {
 
         Random random = new Random();
 
@@ -25,7 +25,7 @@ public class RandomNucleating implements Nucleating {
             y = random.nextInt(grid.getHeight());
 
             cell = grid.getCell(x, y);
-            algorithm.changeState(cell);
+            growth.changeState(cell);
         }
     }
 

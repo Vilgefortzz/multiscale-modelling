@@ -9,8 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import vilgefortzz.edu.grain_growth.algorithm.Algorithm;
-import vilgefortzz.edu.grain_growth.algorithm.SimpleGrainGrowth;
+import vilgefortzz.edu.grain_growth.growth.Growth;
+import vilgefortzz.edu.grain_growth.growth.SimpleGrainGrowth;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
 import vilgefortzz.edu.grain_growth.neighbourhood.VonNeumann;
@@ -60,9 +60,9 @@ public class Controller implements Initializable{
     @FXML private Button generateGridButton;
 
     /**
-     * Growth
+     * Algorithm
      */
-    @FXML private ComboBox<Algorithm> algorithmComboBox;
+    @FXML private ComboBox<Growth> algorithmComboBox;
 
     /**
      * Neighbourhood
@@ -77,7 +77,7 @@ public class Controller implements Initializable{
     @FXML private Button nucleatingButton;
 
     /**
-     * Growth
+     * Algorithm
      */
     @FXML private Button startButton;
     @FXML private Button stopButton;
@@ -232,11 +232,11 @@ public class Controller implements Initializable{
 
     private void setOptionsToSolver(Grid grid) {
 
-        Algorithm algorithm = algorithmComboBox.getSelectionModel().getSelectedItem();
+        Growth growth = algorithmComboBox.getSelectionModel().getSelectedItem();
         Neighbourhood neighbourhood = neighbourhoodComboBox.getSelectionModel().getSelectedItem();
 
         solver.setGrid(grid);
-        solver.setAlgorithm(algorithm);
+        solver.setGrowth(growth);
         solver.setNeighbourhood(neighbourhood);
     }
 

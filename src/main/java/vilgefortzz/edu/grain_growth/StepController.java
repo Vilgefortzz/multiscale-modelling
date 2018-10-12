@@ -25,7 +25,7 @@ public class StepController extends ScheduledService<Grid> {
     }
 
     public boolean isFinished(){
-        return solver.getAlgorithm().isFinished();
+        return solver.getGrowth().isFinished();
     }
 
     @Override

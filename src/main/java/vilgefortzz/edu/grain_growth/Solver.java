@@ -1,6 +1,6 @@
 package vilgefortzz.edu.grain_growth;
 
-import vilgefortzz.edu.grain_growth.algorithm.Algorithm;
+import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
@@ -13,38 +13,38 @@ public class Solver {
 
     private Grid grid;
 
-    private Algorithm algorithm;
+    private Growth growth;
     private Neighbourhood neighbourhood;
     private Nucleating nucleating;
 
     public void initialize() throws Exception {
 
-        if (grid == null || algorithm == null || neighbourhood == null) {
+        if (grid == null || growth == null || neighbourhood == null) {
             throw new Exception("Options are not set correctly");
         }
 
-        algorithm.initialize(grid);
+        growth.initialize(grid);
     }
 
     public void nucleating(int n) throws Exception {
 
         if (grid == null) throw new Exception("Grid not set");
-        if (algorithm == null) throw new Exception("Strategy not set");
+        if (growth == null) throw new Exception("Strategy not set");
         if (nucleating == null) throw new Exception("Nucleating not set");
 
-        nucleating.nucleating(algorithm, grid, n);
+        nucleating.nucleating(growth, grid, n);
     }
 
     public void switchState(Cell c){
-        algorithm.changeState(c);
+        growth.changeState(c);
     }
 
-    public void setAlgorithm(Algorithm algorithm){
-        this.algorithm = algorithm;
+    public void setGrowth(Growth growth){
+        this.growth = growth;
     }
 
-    public Algorithm getAlgorithm() {
-        return algorithm;
+    public Growth getGrowth() {
+        return growth;
     }
 
     public void setNeighbourhood(Neighbourhood neighbourhood) {
@@ -73,7 +73,7 @@ public class Solver {
 
     public Grid realizeStep() {
 
-        algorithm.mark(grid, neighbourhood);
+        growth.mark(grid, neighbourhood);
         return grid;
     }
 }

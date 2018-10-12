@@ -1,0 +1,9 @@
+package vilgefortzz.edu.grain_growth.growth;
+
+/**
+ * Created by vilgefortzz on 07/10/18
+ */
+public abstract class Growth implements Algorithm {
+
+    public abstract boolean isFinished();
+}

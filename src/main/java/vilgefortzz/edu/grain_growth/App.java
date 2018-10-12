@@ -26,6 +26,7 @@ public class App extends Application {
         Parent root = FXMLLoader.load(layout);
 
         primaryStage.setTitle("Grain growth");
+        primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

@@ -1,6 +1,6 @@
 package vilgefortzz.edu.grain_growth.nucleating;
 
-import vilgefortzz.edu.grain_growth.algorithm.Algorithm;
+import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 
 /**
@@ -8,5 +8,5 @@ import vilgefortzz.edu.grain_growth.grid.Grid;
  */
 public interface Nucleating {
 
-    void nucleating(Algorithm algorithm, Grid grid, int numberOfGrains);
+    void nucleating(Growth growth, Grid grid, int numberOfGrains);
 }

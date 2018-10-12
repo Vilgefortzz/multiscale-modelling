@@ -1,4 +1,4 @@
-package vilgefortzz.edu.grain_growth.algorithm;
+package vilgefortzz.edu.grain_growth.growth;
 
 import javafx.scene.paint.Color;
 import vilgefortzz.edu.grain_growth.grid.Cell;
@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * Created by vilgefortzz on 07/10/18
  */
-public class SimpleGrainGrowth extends Algorithm {
+public class SimpleGrainGrowth extends Growth {
 
     private boolean finished;
     private boolean changed;
