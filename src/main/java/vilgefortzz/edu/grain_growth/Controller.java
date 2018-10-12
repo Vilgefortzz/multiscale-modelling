@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.util.Duration;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import vilgefortzz.edu.grain_growth.algorithm.Algorithm;
 import vilgefortzz.edu.grain_growth.algorithm.SimpleGrainGrowth;
 import vilgefortzz.edu.grain_growth.grid.Grid;
@@ -81,6 +82,14 @@ public class Controller implements Initializable{
     @FXML private Button startButton;
     @FXML private Button stopButton;
 
+    /**
+     * Export/Import
+     */
+    @FXML private Button importFromFileButton;
+    @FXML private Button exportToFileButton;
+    @FXML private Button importFromBitMapButton;
+    @FXML private Button exportToBitmapButton;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -120,6 +129,12 @@ public class Controller implements Initializable{
         draw(solver.getGrid());
 
         nucleatingButton.setDisable(false);
+
+        importFromFileButton.setDisable(false);
+        importFromBitMapButton.setDisable(false);
+
+        exportToFileButton.setDisable(false);
+        exportToBitmapButton.setDisable(false);
     }
 
     private void initializeSolver(Grid grid) throws Exception {
@@ -193,6 +208,26 @@ public class Controller implements Initializable{
         draw(solver.getGrid());
 
         startButton.setDisable(false);
+    }
+
+    @FXML
+    public void importFromFile() throws Exception {
+        throw new NotImplementedException();
+    }
+
+    @FXML
+    public void exportToFile() throws Exception {
+        throw new NotImplementedException();
+    }
+
+    @FXML
+    public void importFromBitmap() throws Exception {
+        throw new NotImplementedException();
+    }
+
+    @FXML
+    public void exportToBitmap() throws Exception {
+        throw new NotImplementedException();
     }
 
     private void setOptionsToSolver(Grid grid) {
