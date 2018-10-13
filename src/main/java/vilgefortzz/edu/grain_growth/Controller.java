@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -33,6 +34,11 @@ import java.util.ResourceBundle;
  * Created by vilgefortzz on 07/10/18
  */
 public class Controller implements Initializable{
+
+    /**
+     * Paths
+     */
+    private final String MICROSTRUCTURES_IMAGES_PATH = "file:microstructures/images/";
 
     /**
      * Graphics properties
@@ -232,9 +238,15 @@ public class Controller implements Initializable{
 
     @FXML
     public void importFromPng() throws Exception {
+
         FileChooser chooser = new FileChooser();
-        chooser.setTitle("Import microstructure from bitmap");
+        chooser.setTitle("Import microstructure from png");
         File file = chooser.showOpenDialog(new Stage());
+
+        if (file != null) {
+            Image image = new Image(MICROSTRUCTURES_IMAGES_PATH + file.getName());
+            graphicsContext.drawImage(image, 0, 0, width, height);
+        }
     }
 
     @FXML
