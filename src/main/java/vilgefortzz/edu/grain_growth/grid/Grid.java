@@ -9,11 +9,13 @@ import java.util.function.Consumer;
  */
 public class Grid {
 
-    private List<Cell> grid;
+    private List<Cell> cells;
     private int width;
     private int height;
 
     private final boolean cyclic = true;
+
+    private int phase = 0;
 
     public Grid(int width, int height) {
 
@@ -28,22 +30,22 @@ public class Grid {
         this.width = existingGrid.width;
         this.height = existingGrid.height;
 
-        this.grid = new ArrayList<>();
-        for (Cell cell: existingGrid.grid) {
+        this.cells = new ArrayList<>();
+        for (Cell cell: existingGrid.cells) {
             Cell nc = new Cell(cell.getX(), cell.getY());
             nc.setState(cell.getState());
 
-            grid.add(nc);
+            cells.add(nc);
         }
     }
 
     private void initailizeGrid() {
 
-        grid = new ArrayList<>();
+        cells = new ArrayList<>();
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++){
-                grid.add(new Cell(x, y));
+                cells.add(new Cell(x, y));
             }
         }
     }
@@ -63,11 +65,11 @@ public class Grid {
         if (x >= width || y >= height) return null;
         if (x < 0 || y < 0) return null;
 
-        return grid.get(y * width + x);
+        return cells.get(y * width + x);
     }
 
     public void forEach(Consumer<Cell> f){
-        grid.forEach(f);
+        cells.forEach(f);
     }
 
     public int getWidth() {
@@ -80,5 +82,33 @@ public class Grid {
 
     public Cell getCell(int x, int y) {
         return getCellCyclic(x, y);
+    }
+
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
+
+    public List<String> prepareData() {
+
+        List<String> data = new ArrayList<>();
+
+        // Grid dimensions
+        data.add(Integer.toString(width) + " " + height);
+
+        // Cell values
+        forEach(c -> {
+            data.add(
+                    Integer.toString(c.getX()) + " "
+                    + c.getY() + " "
+                    + phase + " "
+                    + c.getState()
+            );
+        });
+
+        return data;
     }
 }

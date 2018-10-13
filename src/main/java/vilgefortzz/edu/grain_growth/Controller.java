@@ -15,7 +15,6 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.growth.SimpleGrainGrowth;
 import vilgefortzz.edu.grain_growth.grid.Grid;
@@ -27,7 +26,9 @@ import vilgefortzz.edu.grain_growth.grid.ColorGenerator;
 
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.FileWriter;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -38,6 +39,7 @@ public class Controller implements Initializable{
     /**
      * Paths
      */
+    private final String MICROSTRUCTURES_FILES_PATH = "microstructures/files/";
     private final String MICROSTRUCTURES_IMAGES_PATH = "file:microstructures/images/";
 
     /**
@@ -233,7 +235,26 @@ public class Controller implements Initializable{
 
     @FXML
     public void exportToFile() throws Exception {
-        throw new NotImplementedException();
+
+        File file = new File(MICROSTRUCTURES_FILES_PATH + "microstructure.txt");
+
+        if (file.createNewFile()) {
+            System.out.println("File is created");
+        } else {
+            System.out.println("File already exists");
+        }
+
+        Grid grid = solver.getGrid();
+        List<String> data = grid.prepareData();
+
+        FileWriter writer = new FileWriter(file);
+
+        for (String dataItem: data) {
+            writer.write(dataItem);
+            writer.write(System.getProperty("line.separator"));
+        }
+
+        writer.close();
     }
 
     @FXML
