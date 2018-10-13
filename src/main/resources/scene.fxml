@@ -96,17 +96,17 @@
                </font>
             </Button>
             <Separator layoutX="21.0" layoutY="564.0" prefHeight="3.0" prefWidth="294.0" />
-            <Label layoutX="16.0" layoutY="575.0" text="Bitmap" underline="true">
+            <Label layoutX="16.0" layoutY="575.0" text="Image" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="importFromBitMapButton" disable="true" layoutX="14.0" layoutY="601.0" mnemonicParsing="false" onAction="#importFromBitmap" text="Import">
+            <Button fx:id="importFromPngButton" disable="true" layoutX="14.0" layoutY="601.0" mnemonicParsing="false" onAction="#importFromPng" text="Import">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="exportToBitmapButton" disable="true" layoutX="85.0" layoutY="601.0" mnemonicParsing="false" onAction="#exportToBitmap" text="Export">
+            <Button fx:id="exportToPngButton" disable="true" layoutX="85.0" layoutY="601.0" mnemonicParsing="false" onAction="#exportToPng" text="Export">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

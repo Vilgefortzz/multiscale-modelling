@@ -2,11 +2,15 @@ package vilgefortzz.edu.grain_growth;
 
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -20,6 +24,7 @@ import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
 import vilgefortzz.edu.grain_growth.grid.ColorGenerator;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,7 +38,7 @@ public class Controller implements Initializable{
      * Graphics properties
      */
     private GraphicsContext graphicsContext;
-    private final int DELAY = 100;
+    private final int DELAY = 60;
 
     private double width;
     private double height;
@@ -90,8 +95,8 @@ public class Controller implements Initializable{
      */
     @FXML private Button importFromFileButton;
     @FXML private Button exportToFileButton;
-    @FXML private Button importFromBitMapButton;
-    @FXML private Button exportToBitmapButton;
+    @FXML private Button importFromPngButton;
+    @FXML private Button exportToPngButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -134,10 +139,10 @@ public class Controller implements Initializable{
         nucleatingButton.setDisable(false);
 
         importFromFileButton.setDisable(false);
-        importFromBitMapButton.setDisable(false);
+        importFromPngButton.setDisable(false);
 
         exportToFileButton.setDisable(false);
-        exportToBitmapButton.setDisable(false);
+        exportToPngButton.setDisable(false);
     }
 
     private void initializeSolver(Grid grid) throws Exception {
@@ -226,15 +231,25 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void importFromBitmap() throws Exception {
+    public void importFromPng() throws Exception {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Import microstructure from bitmap");
         File file = chooser.showOpenDialog(new Stage());
     }
 
     @FXML
-    public void exportToBitmap() throws Exception {
-        throw new NotImplementedException();
+    public void exportToPng() throws Exception {
+
+        WritableImage exportedImage = new WritableImage((int) width, (int) height);
+        File file = new File("microstructures/images/microstructure.png");
+
+        canvas.snapshot(null, exportedImage);
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(exportedImage, null), "png", file);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
     private void setOptionsToSolver(Grid grid) {
