@@ -9,13 +9,11 @@ import java.util.function.Consumer;
  */
 public class Grid {
 
-    private List<Cell> cells;
     private int width;
     private int height;
+    private List<Cell> cells;
 
     private final boolean cyclic = true;
-
-    private int phase = 0;
 
     public Grid(int width, int height) {
 
@@ -31,7 +29,7 @@ public class Grid {
         this.height = existingGrid.height;
 
         this.cells = new ArrayList<>();
-        for (Cell cell: existingGrid.cells) {
+        for (Cell cell : existingGrid.cells) {
             Cell nc = new Cell(cell.getX(), cell.getY());
             nc.setState(cell.getState());
 
@@ -39,12 +37,19 @@ public class Grid {
         }
     }
 
+    public Grid(int width, int height, List<Cell> cells) {
+
+        this.width = width;
+        this.height = height;
+        this.cells = cells;
+    }
+
     private void initailizeGrid() {
 
         cells = new ArrayList<>();
 
         for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++){
+            for (int x = 0; x < width; x++) {
                 cells.add(new Cell(x, y));
             }
         }
@@ -68,7 +73,7 @@ public class Grid {
         return cells.get(y * width + x);
     }
 
-    public void forEach(Consumer<Cell> f){
+    public void forEach(Consumer<Cell> f) {
         cells.forEach(f);
     }
 
@@ -84,14 +89,6 @@ public class Grid {
         return getCellCyclic(x, y);
     }
 
-    public int getPhase() {
-        return phase;
-    }
-
-    public void setPhase(int phase) {
-        this.phase = phase;
-    }
-
     public List<String> prepareData() {
 
         List<String> data = new ArrayList<>();
@@ -103,9 +100,9 @@ public class Grid {
         forEach(c -> {
             data.add(
                     Integer.toString(c.getX()) + " "
-                    + c.getY() + " "
-                    + phase + " "
-                    + c.getState()
+                            + c.getY() + " "
+                            + c.getPhase() + " "
+                            + c.getState()
             );
         });
 

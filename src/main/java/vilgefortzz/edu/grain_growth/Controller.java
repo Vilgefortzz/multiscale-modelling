@@ -7,34 +7,35 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import vilgefortzz.edu.grain_growth.grid.Cell;
+import vilgefortzz.edu.grain_growth.grid.ColorGenerator;
+import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.growth.SimpleGrainGrowth;
-import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
 import vilgefortzz.edu.grain_growth.neighbourhood.VonNeumann;
 import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
-import vilgefortzz.edu.grain_growth.grid.ColorGenerator;
 
 import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Created by vilgefortzz on 07/10/18
  */
-public class Controller implements Initializable{
+public class Controller implements Initializable {
 
     /**
      * Paths
@@ -56,7 +57,8 @@ public class Controller implements Initializable{
     /**
      * Canvas
      */
-    @FXML private Canvas canvas;
+    @FXML
+    private Canvas canvas;
 
     /**
      * Growing step controller - iteration
@@ -71,40 +73,54 @@ public class Controller implements Initializable{
     /**
      * Grid
      */
-    @FXML private TextField columnsText;
-    @FXML private TextField rowsText;
-    @FXML private Button generateGridButton;
+    @FXML
+    private TextField columnsText;
+    @FXML
+    private TextField rowsText;
+    @FXML
+    private Button generateGridButton;
 
     /**
      * Algorithm
      */
-    @FXML private ComboBox<Growth> algorithmComboBox;
+    @FXML
+    private ComboBox<Growth> algorithmComboBox;
 
     /**
      * Neighbourhood
      */
-    @FXML private ComboBox<Neighbourhood> neighbourhoodComboBox;
+    @FXML
+    private ComboBox<Neighbourhood> neighbourhoodComboBox;
 
     /**
      * Nucleating
      */
-    @FXML private ComboBox<Nucleating> nucleatingComboBox;
-    @FXML private TextField numberOfGrainsText;
-    @FXML private Button nucleatingButton;
+    @FXML
+    private ComboBox<Nucleating> nucleatingComboBox;
+    @FXML
+    private TextField numberOfGrainsText;
+    @FXML
+    private Button nucleatingButton;
 
     /**
      * Algorithm
      */
-    @FXML private Button startButton;
-    @FXML private Button stopButton;
+    @FXML
+    private Button startButton;
+    @FXML
+    private Button stopButton;
 
     /**
      * Export/Import
      */
-    @FXML private Button importFromFileButton;
-    @FXML private Button exportToFileButton;
-    @FXML private Button importFromPngButton;
-    @FXML private Button exportToPngButton;
+    @FXML
+    private Button importFromFileButton;
+    @FXML
+    private Button exportToFileButton;
+    @FXML
+    private Button importFromPngButton;
+    @FXML
+    private Button exportToPngButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -139,7 +155,15 @@ public class Controller implements Initializable{
     @FXML
     public void generateGrid() throws Exception {
 
-        Grid grid = createGrid();
+        int columns = Integer.parseInt(columnsText.getText());
+        int rows = Integer.parseInt(rowsText.getText());
+
+        generateGrid(columns, rows, null);
+    }
+
+    private void generateGrid(int columns, int rows, List<Cell> cells) throws Exception {
+
+        Grid grid = createGrid(columns, rows, cells);
         initializeSolver(grid);
 
         draw(solver.getGrid());
@@ -166,12 +190,15 @@ public class Controller implements Initializable{
         stepController.setPeriod(Duration.millis(DELAY));
     }
 
-    private Grid createGrid() {
+    private Grid createGrid(int columns, int rows, List<Cell> cells) {
 
-        int columns = Integer.parseInt(columnsText.getText());
-        int rows = Integer.parseInt(rowsText.getText());
+        Grid grid;
 
-        Grid grid = new Grid(columns, rows);
+        if (cells != null) {
+            grid = new Grid(columns, rows, cells);
+        } else {
+            grid = new Grid(columns, rows);
+        }
 
         int gridWidth = grid.getWidth();
         int gridHeight = grid.getHeight();
@@ -189,7 +216,7 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    public void start() throws Exception{
+    public void start() throws Exception {
 
         if (stepController.getState() != Worker.State.READY) {
             stepController.restart();
@@ -228,9 +255,44 @@ public class Controller implements Initializable{
 
     @FXML
     public void importFromFile() throws Exception {
+
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Import microstructure from file");
         File file = chooser.showOpenDialog(new Stage());
+
+        String cellLine, gridDimensions, simulation;
+        int gridWidth = 0, gridHeight = 0;
+        boolean isFinished = false;
+        List<Cell> cells = new ArrayList<>();
+
+        if (file != null) {
+            try (BufferedReader buffer = new BufferedReader(new FileReader(file.getPath()))) {
+
+                simulation = buffer.readLine();
+                isFinished = Boolean.parseBoolean(simulation.split(" ")[0]);
+
+                gridDimensions = buffer.readLine();
+                gridWidth = Integer.parseInt(gridDimensions.split(" ")[0]);
+                gridHeight = Integer.parseInt(gridDimensions.split(" ")[1]);
+
+                while ((cellLine = buffer.readLine()) != null) {
+
+                    String[] cell = cellLine.split(" ");
+                    cells.add(new Cell(
+                            Integer.parseInt(cell[0]),
+                            Integer.parseInt(cell[1]),
+                            Integer.parseInt(cell[2]),
+                            Integer.parseInt(cell[3])
+                    ));
+                }
+            } catch (IOException exception) {
+                System.out.println(exception.getMessage());
+            }
+
+            generateGrid(gridWidth, gridHeight, cells);
+            solver.getGrowth().setFinished(isFinished);
+            startButton.setDisable(false);
+        }
     }
 
     @FXML
@@ -245,12 +307,17 @@ public class Controller implements Initializable{
         }
 
         Grid grid = solver.getGrid();
-        List<String> data = grid.prepareData();
+
+        String simulationData = stepController.prepareData();
+        List<String> gridData = grid.prepareData();
 
         FileWriter writer = new FileWriter(file);
 
-        for (String dataItem: data) {
-            writer.write(dataItem);
+        writer.write(simulationData);
+        writer.write(System.getProperty("line.separator"));
+
+        for (String gridDataItem : gridData) {
+            writer.write(gridDataItem);
             writer.write(System.getProperty("line.separator"));
         }
 
@@ -314,7 +381,7 @@ public class Controller implements Initializable{
         drawCells(grid);
     }
 
-    private void drawCells(Grid grid){
+    private void drawCells(Grid grid) {
         grid.forEach(c -> {
             graphicsContext.setFill(ColorGenerator.getColor(c.getState()));
             graphicsContext.fillRect(

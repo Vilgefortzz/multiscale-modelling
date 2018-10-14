@@ -59,6 +59,11 @@ public class SimpleGrainGrowth extends Growth {
         return finished;
     }
 
+    @Override
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
     public int getType() {
         return type;
     }

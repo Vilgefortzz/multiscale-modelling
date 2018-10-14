@@ -12,7 +12,7 @@ public class StepController extends ScheduledService<Grid> {
     private Solver solver;
     private int iteration;
 
-    public void initialize(){
+    public void initialize() {
         iteration = 0;
     }
 
@@ -24,7 +24,7 @@ public class StepController extends ScheduledService<Grid> {
         this.solver = solver;
     }
 
-    public boolean isFinished(){
+    public boolean isFinished() {
         return solver.getGrowth().isFinished();
     }
 
@@ -40,5 +40,9 @@ public class StepController extends ScheduledService<Grid> {
                 return solver.realizeStep();
             }
         };
+    }
+
+    public String prepareData() {
+        return solver.getGrowth().isFinished() + " " + iteration;
     }
 }

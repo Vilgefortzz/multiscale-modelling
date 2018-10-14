@@ -84,7 +84,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="importFromFileButton" disable="true" layoutX="14.0" layoutY="528.0" mnemonicParsing="false" onAction="#importFromFile" text="Import">
+            <Button fx:id="importFromFileButton" layoutX="14.0" layoutY="528.0" mnemonicParsing="false" onAction="#importFromFile" text="Import">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

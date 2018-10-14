@@ -6,4 +6,5 @@ package vilgefortzz.edu.grain_growth.growth;
 public abstract class Growth implements Algorithm {
 
     public abstract boolean isFinished();
+    public abstract void setFinished(boolean finished);
 }
