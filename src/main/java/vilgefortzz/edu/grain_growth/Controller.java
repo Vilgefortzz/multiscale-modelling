@@ -10,7 +10,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,6 +25,7 @@ import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
@@ -344,9 +344,26 @@ public class Controller implements Initializable {
         chooser.setInitialDirectory(new File(MICROSTRUCTURES_IMAGES_DIR_PATH));
         File file = chooser.showOpenDialog(new Stage());
 
+        List<Cell> cells = new ArrayList<>();
+
         if (file != null) {
-            Image image = new Image(MICROSTRUCTURES_IMAGES_PATH + file.getName());
-            graphicsContext.drawImage(image, 0, 0, width, height);
+
+            BufferedImage image = ImageIO.read(file);
+
+            for (int xPixel = 0; xPixel < image.getWidth(); xPixel++) {
+                for (int yPixel = 0; yPixel < image.getHeight(); yPixel++) {
+
+                    int color = image.getRGB(xPixel, yPixel);
+                    cells.add(new Cell(
+                            xPixel,
+                            yPixel,
+                            0,
+                            ColorGenerator.getState(new Color(color))
+                    ));
+                }
+            }
+
+            generateGrid(image.getWidth(), image.getHeight(), cells);
             exportToBitmapButton.setDisable(false);
         }
     }
