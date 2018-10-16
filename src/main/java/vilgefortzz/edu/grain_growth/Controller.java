@@ -26,6 +26,7 @@ import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ public class Controller implements Initializable {
     /**
      * Paths
      */
-    private final String MICROSTRUCTURES_FILES_PATH = "microstructures/files/";
+    private final String MICROSTRUCTURES_FILES_DIR_PATH = "microstructures/files/";
+    private final String MICROSTRUCTURES_IMAGES_DIR_PATH = "microstructures/images/";
     private final String MICROSTRUCTURES_IMAGES_PATH = "file:microstructures/images/";
 
     /**
@@ -118,9 +120,9 @@ public class Controller implements Initializable {
     @FXML
     private Button exportToFileButton;
     @FXML
-    private Button importFromPngButton;
+    private Button importFromBitmapButton;
     @FXML
-    private Button exportToPngButton;
+    private Button exportToBitmapButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -171,10 +173,10 @@ public class Controller implements Initializable {
         nucleatingButton.setDisable(false);
 
         importFromFileButton.setDisable(false);
-        importFromPngButton.setDisable(false);
+        importFromBitmapButton.setDisable(false);
 
         exportToFileButton.setDisable(false);
-        exportToPngButton.setDisable(false);
+        exportToBitmapButton.setDisable(false);
     }
 
     private void initializeSolver(Grid grid) throws Exception {
@@ -258,6 +260,7 @@ public class Controller implements Initializable {
 
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Import microstructure from file");
+        chooser.setInitialDirectory(new File(MICROSTRUCTURES_FILES_DIR_PATH));
         File file = chooser.showOpenDialog(new Stage());
 
         String cellLine, gridDimensions, simulation;
@@ -266,6 +269,7 @@ public class Controller implements Initializable {
         List<Cell> cells = new ArrayList<>();
 
         if (file != null) {
+
             try (BufferedReader buffer = new BufferedReader(new FileReader(file.getPath()))) {
 
                 simulation = buffer.readLine();
@@ -298,12 +302,12 @@ public class Controller implements Initializable {
     @FXML
     public void exportToFile() throws Exception {
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Export microstructure to file");
-        fileChooser.setInitialDirectory(new File(MICROSTRUCTURES_FILES_PATH));
-        fileChooser.setInitialFileName("microstructure.txt");
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export microstructure to file");
+        chooser.setInitialDirectory(new File(MICROSTRUCTURES_FILES_DIR_PATH));
+        chooser.setInitialFileName("microstructure.txt");
 
-        File file = fileChooser.showSaveDialog(new Stage());
+        File file = chooser.showSaveDialog(new Stage());
 
         if (file != null) {
 
@@ -333,30 +337,48 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void importFromPng() throws Exception {
+    public void importFromBitmap() throws Exception {
 
         FileChooser chooser = new FileChooser();
-        chooser.setTitle("Import microstructure from png");
+        chooser.setTitle("Import microstructure from bitmap");
+        chooser.setInitialDirectory(new File(MICROSTRUCTURES_IMAGES_DIR_PATH));
         File file = chooser.showOpenDialog(new Stage());
 
         if (file != null) {
             Image image = new Image(MICROSTRUCTURES_IMAGES_PATH + file.getName());
             graphicsContext.drawImage(image, 0, 0, width, height);
+            exportToBitmapButton.setDisable(false);
         }
     }
 
     @FXML
-    public void exportToPng() throws Exception {
+    public void exportToBitmap() throws Exception {
 
-        WritableImage exportedImage = new WritableImage((int) width, (int) height);
-        File file = new File("microstructures/images/microstructure.png");
-
+        WritableImage exportedImage = new WritableImage((int)width, (int)height);
         canvas.snapshot(null, exportedImage);
 
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(exportedImage, null), "png", file);
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export microstructure to bitmap");
+        fileChooser.setInitialDirectory(new File(MICROSTRUCTURES_IMAGES_DIR_PATH));
+        fileChooser.setInitialFileName("microstructure.bmp");
+
+        File file = fileChooser.showSaveDialog(new Stage());
+
+        if (file != null) {
+
+            BufferedImage image = SwingFXUtils.fromFXImage(exportedImage, null);
+
+            if (file.createNewFile()) {
+                System.out.println("File is created");
+            } else {
+                System.out.println("File already exists");
+            }
+
+            // Export to bitmap
+            BufferedImage bitmapImage = new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_RGB);
+            bitmapImage.getGraphics().drawImage(image, 0, 0, null);
+
+            ImageIO.write(bitmapImage, "bmp", file);
         }
     }
 
