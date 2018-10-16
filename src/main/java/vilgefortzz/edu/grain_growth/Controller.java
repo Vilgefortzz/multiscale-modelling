@@ -291,37 +291,45 @@ public class Controller implements Initializable {
 
             generateGrid(gridWidth, gridHeight, cells);
             solver.getGrowth().setFinished(isFinished);
-            startButton.setDisable(false);
+            startButton.setDisable(true);
         }
     }
 
     @FXML
     public void exportToFile() throws Exception {
 
-        File file = new File(MICROSTRUCTURES_FILES_PATH + "microstructure.txt");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export microstructure to file");
+        fileChooser.setInitialDirectory(new File(MICROSTRUCTURES_FILES_PATH));
+        fileChooser.setInitialFileName("microstructure.txt");
 
-        if (file.createNewFile()) {
-            System.out.println("File is created");
-        } else {
-            System.out.println("File already exists");
-        }
+        File file = fileChooser.showSaveDialog(new Stage());
 
-        Grid grid = solver.getGrid();
+        if (file != null) {
 
-        String simulationData = stepController.prepareData();
-        List<String> gridData = grid.prepareData();
+            if (file.createNewFile()) {
+                System.out.println("File is created");
+            } else {
+                System.out.println("File already exists");
+            }
 
-        FileWriter writer = new FileWriter(file);
+            Grid grid = solver.getGrid();
 
-        writer.write(simulationData);
-        writer.write(System.getProperty("line.separator"));
+            String simulationData = stepController.prepareData();
+            List<String> gridData = grid.prepareData();
 
-        for (String gridDataItem : gridData) {
-            writer.write(gridDataItem);
+            FileWriter writer = new FileWriter(file);
+
+            writer.write(simulationData);
             writer.write(System.getProperty("line.separator"));
-        }
 
-        writer.close();
+            for (String gridDataItem : gridData) {
+                writer.write(gridDataItem);
+                writer.write(System.getProperty("line.separator"));
+            }
+
+            writer.close();
+        }
     }
 
     @FXML
