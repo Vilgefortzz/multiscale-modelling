@@ -43,6 +43,6 @@ public class StepController extends ScheduledService<Grid> {
     }
 
     public String prepareData() {
-        return solver.getGrowth().isFinished() + " " + iteration;
+        return solver.getGrowth().isFinished() + " " + solver.getGrowth().getType();
     }
 }

@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
-import vilgefortzz.edu.grain_growth.grid.ColorGenerator;
+import vilgefortzz.edu.grain_growth.image.ColorGenerator;
 
 import java.util.List;
 import java.util.Random;
@@ -64,8 +64,14 @@ public class SimpleGrainGrowth extends Growth {
         this.finished = finished;
     }
 
+    @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int createNewType() {

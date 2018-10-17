@@ -15,10 +15,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import vilgefortzz.edu.grain_growth.grid.Cell;
-import vilgefortzz.edu.grain_growth.grid.ColorGenerator;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.growth.SimpleGrainGrowth;
+import vilgefortzz.edu.grain_growth.image.ColorGenerator;
+import vilgefortzz.edu.grain_growth.image.ImageModifier;
 import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
 import vilgefortzz.edu.grain_growth.neighbourhood.VonNeumann;
 import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
@@ -51,8 +52,8 @@ public class Controller implements Initializable {
     private GraphicsContext graphicsContext;
     private final int DELAY = 60;
 
-    private double width;
-    private double height;
+    private int width;
+    private int height;
 
     private double cellSize;
 
@@ -129,8 +130,8 @@ public class Controller implements Initializable {
 
         graphicsContext = canvas.getGraphicsContext2D();
 
-        width = canvas.getWidth();
-        height = canvas.getHeight();
+        width = (int)canvas.getWidth();
+        height = (int)canvas.getHeight();
 
         initializeOptions();
     }
@@ -264,7 +265,7 @@ public class Controller implements Initializable {
         File file = chooser.showOpenDialog(new Stage());
 
         String cellLine, gridDimensions, simulation;
-        int gridWidth = 0, gridHeight = 0;
+        int gridWidth = 0, gridHeight = 0, type = 0;
         boolean isFinished = false;
         List<Cell> cells = new ArrayList<>();
 
@@ -274,6 +275,7 @@ public class Controller implements Initializable {
 
                 simulation = buffer.readLine();
                 isFinished = Boolean.parseBoolean(simulation.split(" ")[0]);
+                type = Integer.parseInt(simulation.split(" ")[1]);
 
                 gridDimensions = buffer.readLine();
                 gridWidth = Integer.parseInt(gridDimensions.split(" ")[0]);
@@ -294,8 +296,11 @@ public class Controller implements Initializable {
             }
 
             generateGrid(gridWidth, gridHeight, cells);
+            solver.getGrowth().setType(type);
             solver.getGrowth().setFinished(isFinished);
-            startButton.setDisable(true);
+            if (!isFinished) {
+                startButton.setDisable(false);
+            }
         }
     }
 
@@ -349,9 +354,10 @@ public class Controller implements Initializable {
         if (file != null) {
 
             BufferedImage image = ImageIO.read(file);
+            ColorGenerator.setState(Color.WHITE, 0);
 
-            for (int xPixel = 0; xPixel < image.getWidth(); xPixel++) {
-                for (int yPixel = 0; yPixel < image.getHeight(); yPixel++) {
+            for (int yPixel = 0; yPixel < image.getHeight(); yPixel++) {
+                for (int xPixel = 0; xPixel < image.getWidth(); xPixel++) {
 
                     int color = image.getRGB(xPixel, yPixel);
                     cells.add(new Cell(
@@ -364,6 +370,12 @@ public class Controller implements Initializable {
             }
 
             generateGrid(image.getWidth(), image.getHeight(), cells);
+            solver.getGrowth().setType(ColorGenerator.type);
+            if (cells.stream().noneMatch(cell -> cell.getState() == 0)) {
+                solver.getGrowth().setFinished(true);
+            } else {
+                startButton.setDisable(false);
+            }
             exportToBitmapButton.setDisable(false);
         }
     }
@@ -371,7 +383,7 @@ public class Controller implements Initializable {
     @FXML
     public void exportToBitmap() throws Exception {
 
-        WritableImage exportedImage = new WritableImage((int)width, (int)height);
+        WritableImage exportedImage = new WritableImage(width, height);
         canvas.snapshot(null, exportedImage);
 
         FileChooser fileChooser = new FileChooser();
@@ -392,10 +404,14 @@ public class Controller implements Initializable {
             }
 
             // Export to bitmap
-            BufferedImage bitmapImage = new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_RGB);
+            BufferedImage bitmapImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             bitmapImage.getGraphics().drawImage(image, 0, 0, null);
 
-            ImageIO.write(bitmapImage, "bmp", file);
+            // Resize bitmap
+            BufferedImage resized = ImageModifier.resize(bitmapImage, solver.getGrid().getWidth(), solver.getGrid().getHeight());
+
+            ImageIO.write(resized, "bmp", file);
+
         }
     }
 
