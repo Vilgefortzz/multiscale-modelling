@@ -19,15 +19,27 @@
                   <Font name="Ubuntu Mono Bold" size="26.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="53.0" text="Grid" underline="true">
+            <Label layoutX="13.0" layoutY="53.0" text="Grid" textFill="#209a1e" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
             <Separator layoutX="19.0" layoutY="40.0" prefHeight="3.0" prefWidth="294.0" />
-            <TextField fx:id="columnsText" layoutX="76.0" layoutY="71.0" prefHeight="26.0" prefWidth="45.0" text="300" />
-            <TextField fx:id="rowsText" layoutX="176.0" layoutY="71.0" prefHeight="26.0" prefWidth="45.0" text="300" />
-            <Label layoutX="13.0" layoutY="76.0" text="columns" />
-            <Label layoutX="137.0" layoutY="76.0" text="rows" />
+            <TextField fx:id="columnsText" layoutX="76.0" layoutY="70.0" prefHeight="26.0" prefWidth="45.0" text="300">
+               <font>
+                  <Font size="12.0" />
+               </font></TextField>
+            <TextField fx:id="rowsText" layoutX="166.0" layoutY="70.0" prefHeight="26.0" prefWidth="45.0" text="300">
+               <font>
+                  <Font size="12.0" />
+               </font></TextField>
+            <Label layoutX="19.0" layoutY="76.0" text="columns:">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label layoutX="131.0" layoutY="76.0" text="rows:">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
             <Separator layoutX="19.0" layoutY="140.0" prefHeight="3.0" prefWidth="294.0" />
             <Label layoutX="16.0" layoutY="159.0" text="Algorithm" underline="true">
                <font>
@@ -36,78 +48,114 @@
             </Label>
             <ComboBox fx:id="algorithmComboBox" layoutX="107.0" layoutY="155.0" prefHeight="26.0" prefWidth="193.0" />
             <Separator layoutX="19.0" layoutY="193.0" prefHeight="3.0" prefWidth="294.0" />
-            <Label layoutX="15.0" layoutY="216.0" text="Neighbourhood" underline="true">
+            <Label layoutX="14.0" layoutY="216.0" text="Neighbourhood" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <ComboBox fx:id="neighbourhoodComboBox" layoutX="146.0" layoutY="212.0" prefWidth="150.0" />
-            <Label layoutX="13.0" layoutY="267.0" text="Nucleating" underline="true">
+            <Label layoutX="13.0" layoutY="267.0" text="Nucleating" textFill="#7c3d05" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <Separator layoutX="19.0" layoutY="254.0" prefHeight="3.0" prefWidth="294.0" />
-            <Button fx:id="nucleatingButton" disable="true" layoutX="119.0" layoutY="376.0" mnemonicParsing="false" onAction="#nucleating" text="Nucleating" textFill="#1d8d13">
+            <Button fx:id="nucleatingButton" disable="true" layoutX="18.0" layoutY="364.0" mnemonicParsing="false" onAction="#nucleating" text="Nucleating" textFill="#7c3d05">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <ComboBox fx:id="nucleatingComboBox" layoutX="56.0" layoutY="300.0" prefHeight="26.0" prefWidth="193.0" />
-            <Label layoutX="16.0" layoutY="305.0" text="type" />
-            <Label layoutX="12.0" layoutY="345.0" text="number of grains" />
-            <TextField fx:id="numberOfGrainsText" layoutX="136.0" layoutY="340.0" prefHeight="26.0" prefWidth="55.0" text="20" />
-            <Separator layoutX="19.0" layoutY="413.0" prefHeight="3.0" prefWidth="294.0" />
-            <Label layoutX="18.0" layoutY="427.0" text="Growth" underline="true">
+            <ComboBox fx:id="nucleatingComboBox" layoutX="58.0" layoutY="296.0" prefHeight="26.0" prefWidth="193.0" />
+            <Label layoutX="21.0" layoutY="301.0" text="type:">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label layoutX="20.0" layoutY="329.0" text="number of grains:">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <TextField fx:id="numberOfGrainsText" layoutX="132.0" layoutY="324.0" prefHeight="26.0" prefWidth="45.0" text="20">
+               <font>
+                  <Font size="12.0" />
+               </font></TextField>
+            <Separator layoutX="19.0" layoutY="398.0" prefHeight="3.0" prefWidth="294.0" />
+            <Label layoutX="15.0" layoutY="536.0" text="Growth" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="startButton" disable="true" layoutX="14.0" layoutY="452.0" mnemonicParsing="false" onAction="#start" text="START" textFill="#1d8d13">
+            <Button fx:id="startButton" disable="true" layoutX="14.0" layoutY="564.0" mnemonicParsing="false" onAction="#start" text="START" textFill="#1d8d13">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="stopButton" disable="true" layoutX="79.0" layoutY="452.0" mnemonicParsing="false" onAction="#stop" text="STOP" textFill="#b21717">
+            <Button fx:id="stopButton" disable="true" layoutX="72.0" layoutY="564.0" mnemonicParsing="false" onAction="#stop" text="STOP" textFill="#b21717">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="generateGridButton" layoutX="106.0" layoutY="107.0" mnemonicParsing="false" onAction="#generateGrid" text="Generate grid" textFill="#1f5797">
+            <Button fx:id="generateGridButton" layoutX="14.0" layoutY="107.0" mnemonicParsing="false" onAction="#generateGrid" text="Generate grid" textFill="#209a1e">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Separator layoutX="17.0" layoutY="489.0" prefHeight="3.0" prefWidth="294.0" />
-            <Label layoutX="16.0" layoutY="502.0" text="File" underline="true">
+            <Separator layoutX="19.0" layoutY="602.0" prefHeight="3.0" prefWidth="294.0" />
+            <Label layoutX="20.0" layoutY="612.0" text="File" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="importFromFileButton" layoutX="14.0" layoutY="528.0" mnemonicParsing="false" onAction="#importFromFile" text="Import">
+            <Button fx:id="importFromFileButton" layoutX="17.0" layoutY="637.0" mnemonicParsing="false" onAction="#importFromFile" text="Import">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="exportToFileButton" disable="true" layoutX="85.0" layoutY="528.0" mnemonicParsing="false" onAction="#exportToFile" text="Export">
+            <Button fx:id="exportToFileButton" disable="true" layoutX="77.0" layoutY="637.0" mnemonicParsing="false" onAction="#exportToFile" text="Export">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Separator layoutX="21.0" layoutY="564.0" prefHeight="3.0" prefWidth="294.0" />
-            <Label layoutX="16.0" layoutY="575.0" text="Bitmap" underline="true">
+            <Separator layoutX="19.0" layoutY="672.0" prefHeight="3.0" prefWidth="294.0" />
+            <Label layoutX="175.0" layoutY="612.0" text="Bitmap" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="importFromBitmapButton" layoutX="14.0" layoutY="601.0" mnemonicParsing="false" onAction="#importFromBitmap" text="Import">
+            <Button fx:id="importFromBitmapButton" layoutX="173.0" layoutY="637.0" mnemonicParsing="false" onAction="#importFromBitmap" text="Import">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="exportToBitmapButton" disable="true" layoutX="85.0" layoutY="601.0" mnemonicParsing="false" onAction="#exportToBitmap" text="Export">
+            <Button fx:id="exportToBitmapButton" disable="true" layoutX="234.0" layoutY="637.0" mnemonicParsing="false" onAction="#exportToBitmap" text="Export">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Label layoutX="22.0" layoutY="437.0" text="amount of inclusions:">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="amountOfInclusionsText" layoutX="154.0" layoutY="432.0" prefHeight="26.0" prefWidth="45.0" text="10">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label layoutX="22.0" layoutY="466.0" text="type of inclusion:">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="typeOfInclusionComboBox" layoutX="131.0" layoutY="461.0" prefHeight="26.0" prefWidth="125.0" />
+            <Label layoutX="15.0" layoutY="410.0" text="Inclusions" underline="true">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Separator layoutX="16.0" layoutY="525.0" prefHeight="3.0" prefWidth="294.0" />
+            <Button fx:id="addInclusionsButton" disable="true" layoutX="18.0" layoutY="494.0" mnemonicParsing="false" onAction="#generateGrid" text="Add inclusions">
+               <font>
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
          </children>

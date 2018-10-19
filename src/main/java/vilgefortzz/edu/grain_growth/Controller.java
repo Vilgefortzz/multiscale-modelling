@@ -106,6 +106,16 @@ public class Controller implements Initializable {
     private Button nucleatingButton;
 
     /**
+     * Inclusions
+     */
+    @FXML
+    private TextField amountOfInclusionsText;
+    @FXML
+    public ComboBox<String> typeOfInclusionComboBox;
+    @FXML
+    private Button addInclusionsButton;
+
+    /**
      * Algorithm
      */
     @FXML
@@ -150,9 +160,15 @@ public class Controller implements Initializable {
                 new RandomNucleating()
         );
 
+        typeOfInclusionComboBox.getItems().addAll(
+                "square",
+                "circular"
+        );
+
         algorithmComboBox.getSelectionModel().selectFirst();
         neighbourhoodComboBox.getSelectionModel().selectFirst();
         nucleatingComboBox.getSelectionModel().selectFirst();
+        typeOfInclusionComboBox.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -172,6 +188,7 @@ public class Controller implements Initializable {
         draw(solver.getGrid());
 
         nucleatingButton.setDisable(false);
+        addInclusionsButton.setDisable(false);
 
         importFromFileButton.setDisable(false);
         importFromBitmapButton.setDisable(false);
@@ -230,6 +247,7 @@ public class Controller implements Initializable {
         startButton.setDisable(true);
         stopButton.setDisable(false);
         nucleatingButton.setDisable(true);
+        addInclusionsButton.setDisable(true);
     }
 
     @FXML
