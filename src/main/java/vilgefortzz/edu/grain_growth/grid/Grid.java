@@ -14,12 +14,14 @@ public class Grid {
     private int height;
     private List<Cell> cells;
 
-    private final boolean cyclic = true;
+    private final boolean isCyclic = true;
+    private boolean isCircular;
 
-    public Grid(int width, int height) {
+    public Grid(int width, int height, boolean isCircular) {
 
         this.width = width;
         this.height = height;
+        this.isCircular = isCircular;
 
         initailizeGrid();
     }
@@ -38,10 +40,12 @@ public class Grid {
         }
     }
 
-    public Grid(int width, int height, List<Cell> cells) {
+    public Grid(int width, int height, boolean isCircular, List<Cell> cells) {
 
         this.width = width;
         this.height = height;
+        this.isCircular = isCircular;
+
         this.cells = cells;
     }
 
@@ -102,6 +106,10 @@ public class Grid {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean isCircular() {
+        return isCircular;
     }
 
     public Cell getCell(int x, int y) {

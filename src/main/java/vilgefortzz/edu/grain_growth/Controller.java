@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
@@ -80,6 +81,8 @@ public class Controller implements Initializable {
     private TextField columnsText;
     @FXML
     private TextField rowsText;
+    @FXML
+    private CheckBox circularCheckBox;
     @FXML
     private Button generateGridButton;
 
@@ -177,12 +180,12 @@ public class Controller implements Initializable {
         int columns = Integer.parseInt(columnsText.getText());
         int rows = Integer.parseInt(rowsText.getText());
 
-        generateGrid(columns, rows, null);
+        generateGrid(columns, rows, null, circularCheckBox.isSelected());
     }
 
-    private void generateGrid(int columns, int rows, List<Cell> cells) throws Exception {
+    private void generateGrid(int columns, int rows, List<Cell> cells, boolean isCircular) throws Exception {
 
-        Grid grid = createGrid(columns, rows, cells);
+        Grid grid = createGrid(columns, rows, isCircular, cells);
         initializeSolver(grid);
 
         draw(solver.getGrid());
@@ -210,14 +213,14 @@ public class Controller implements Initializable {
         stepController.setPeriod(Duration.millis(DELAY));
     }
 
-    private Grid createGrid(int columns, int rows, List<Cell> cells) {
+    private Grid createGrid(int columns, int rows, boolean isCircular, List<Cell> cells) {
 
         Grid grid;
 
         if (cells != null) {
-            grid = new Grid(columns, rows, cells);
+            grid = new Grid(columns, rows, isCircular, cells);
         } else {
-            grid = new Grid(columns, rows);
+            grid = new Grid(columns, rows, isCircular);
         }
 
         int gridWidth = grid.getWidth();
@@ -324,7 +327,7 @@ public class Controller implements Initializable {
                 System.out.println(exception.getMessage());
             }
 
-            generateGrid(gridWidth, gridHeight, cells);
+            generateGrid(gridWidth, gridHeight, cells, false);
             solver.getGrowth().setType(type);
             solver.getGrowth().setFinished(isFinished);
             if (!isFinished) {
@@ -398,7 +401,7 @@ public class Controller implements Initializable {
                 }
             }
 
-            generateGrid(image.getWidth(), image.getHeight(), cells);
+            generateGrid(image.getWidth(), image.getHeight(), cells, false);
             solver.getGrowth().setType(ColorGenerator.type);
             if (cells.stream().noneMatch(cell -> cell.getState() == 0)) {
                 solver.getGrowth().setFinished(true);
@@ -471,18 +474,53 @@ public class Controller implements Initializable {
     private void draw(Grid grid) {
 
         graphicsContext.clearRect(0, 0, width, height);
-        drawCells(grid);
+
+        if (grid.isCircular()) {
+            drawCircularCells(grid);
+        } else {
+            drawSquareCells(grid);
+        }
     }
 
-    private void drawCells(Grid grid) {
+    private void drawSquareCells(Grid grid) {
         grid.forEachCells(cell -> {
             graphicsContext.setFill(ColorGenerator.getColor(cell.getState()));
-            graphicsContext.fillRect(
-                    cell.getX() * cellSize,
-                    cell.getY() * cellSize,
-                    cellSize,
-                    cellSize
-            );
+            if (cell.getState() == Cell.INCLUSION_STATE && cell.getType() == Cell.CIRCULAR_TYPE) {
+                graphicsContext.fillOval(
+                        cell.getX() * cellSize,
+                        cell.getY() * cellSize,
+                        cellSize,
+                        cellSize
+                );
+            } else {
+                graphicsContext.fillRect(
+                        cell.getX() * cellSize,
+                        cell.getY() * cellSize,
+                        cellSize,
+                        cellSize
+                );
+            }
+        });
+    }
+
+    private void drawCircularCells(Grid grid) {
+        grid.forEachCells(cell -> {
+            graphicsContext.setFill(ColorGenerator.getColor(cell.getState()));
+            if (cell.getState() == Cell.INCLUSION_STATE && cell.getType() == Cell.SQUARE_TYPE) {
+                graphicsContext.fillRect(
+                        cell.getX() * cellSize,
+                        cell.getY() * cellSize,
+                        cellSize,
+                        cellSize
+                );
+            } else {
+                graphicsContext.fillOval(
+                        cell.getX() * cellSize,
+                        cell.getY() * cellSize,
+                        cellSize,
+                        cellSize
+                );
+            }
         });
     }
 }
