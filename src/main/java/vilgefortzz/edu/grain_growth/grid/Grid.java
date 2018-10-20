@@ -120,15 +120,16 @@ public class Grid {
 
         List<String> data = new ArrayList<>();
 
-        // Grid dimensions
-        data.add(Integer.toString(width) + " " + height);
+        // Grid dimensions + type
+        data.add(Integer.toString(width) + " " + height + " " + isCircular);
 
         // Cell values
         forEachCells(cell -> data.add(
                 Integer.toString(cell.getX()) + " "
                         + cell.getY() + " "
                         + cell.getPhase() + " "
-                        + cell.getState()
+                        + cell.getState() + " "
+                        + cell.getType()
         ));
 
         return data;

@@ -298,7 +298,7 @@ public class Controller implements Initializable {
 
         String cellLine, gridDimensions, simulation;
         int gridWidth = 0, gridHeight = 0, type = 0;
-        boolean isFinished = false;
+        boolean isFinished = false, isCircular = false;
         List<Cell> cells = new ArrayList<>();
 
         if (file != null) {
@@ -312,6 +312,7 @@ public class Controller implements Initializable {
                 gridDimensions = buffer.readLine();
                 gridWidth = Integer.parseInt(gridDimensions.split(" ")[0]);
                 gridHeight = Integer.parseInt(gridDimensions.split(" ")[1]);
+                isCircular = Boolean.parseBoolean(gridDimensions.split(" ")[2]);
 
                 while ((cellLine = buffer.readLine()) != null) {
 
@@ -320,14 +321,15 @@ public class Controller implements Initializable {
                             Integer.parseInt(cell[0]),
                             Integer.parseInt(cell[1]),
                             Integer.parseInt(cell[2]),
-                            Integer.parseInt(cell[3])
+                            Integer.parseInt(cell[3]),
+                            Integer.parseInt(cell[4])
                     ));
                 }
             } catch (IOException exception) {
                 System.out.println(exception.getMessage());
             }
 
-            generateGrid(gridWidth, gridHeight, cells, false);
+            generateGrid(gridWidth, gridHeight, cells, isCircular);
             solver.getGrowth().setType(type);
             solver.getGrowth().setFinished(isFinished);
             if (!isFinished) {
@@ -382,11 +384,13 @@ public class Controller implements Initializable {
         File file = chooser.showOpenDialog(new Stage());
 
         List<Cell> cells = new ArrayList<>();
+        int type = circularCheckBox.isSelected() ? 1 : 0;
 
         if (file != null) {
 
             BufferedImage image = ImageIO.read(file);
             ColorGenerator.setState(Color.WHITE, 0);
+            ColorGenerator.setState(Color.BLACK, -1);
 
             for (int yPixel = 0; yPixel < image.getHeight(); yPixel++) {
                 for (int xPixel = 0; xPixel < image.getWidth(); xPixel++) {
@@ -396,12 +400,13 @@ public class Controller implements Initializable {
                             xPixel,
                             yPixel,
                             0,
-                            ColorGenerator.getState(new Color(color))
+                            ColorGenerator.getState(new Color(color)),
+                            type
                     ));
                 }
             }
 
-            generateGrid(image.getWidth(), image.getHeight(), cells, false);
+            generateGrid(image.getWidth(), image.getHeight(), cells, circularCheckBox.isSelected());
             solver.getGrowth().setType(ColorGenerator.type);
             if (cells.stream().noneMatch(cell -> cell.getState() == 0)) {
                 solver.getGrowth().setFinished(true);

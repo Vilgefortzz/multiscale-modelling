@@ -35,12 +35,13 @@ public class Cell {
         this.state = state;
     }
 
-    public Cell(int x, int y, int phase, int state) {
+    public Cell(int x, int y, int phase, int state, int type) {
 
         this.x = x;
         this.y = y;
         this.phase = phase;
         this.state = state;
+        this.type = type;
     }
 
     public int getX() {
