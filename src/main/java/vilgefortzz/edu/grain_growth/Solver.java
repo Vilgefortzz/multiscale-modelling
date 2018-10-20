@@ -26,13 +26,22 @@ public class Solver {
         growth.initialize(grid);
     }
 
-    public void nucleating(int n) throws Exception {
+    public void nucleating(int numberOfGrains) throws Exception {
 
-        if (grid == null) throw new Exception("Grid not set");
-        if (growth == null) throw new Exception("Strategy not set");
-        if (nucleating == null) throw new Exception("Nucleating not set");
+        if (grid == null || growth == null || nucleating == null) {
+            throw new Exception("Options are not set correctly");
+        }
 
-        nucleating.nucleating(growth, grid, n);
+        nucleating.nucleating(growth, grid, numberOfGrains);
+    }
+
+    public void addInclusions(int amountOfInclusions, int typeOfInclusion) throws Exception {
+
+        if (grid == null || growth == null) {
+            throw new Exception("Options are not set correctly");
+        }
+
+        grid.addInclusions(amountOfInclusions, typeOfInclusion);
     }
 
     public void switchState(Cell c){

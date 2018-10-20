@@ -25,6 +25,7 @@ public class SimpleGrainGrowth extends Growth {
         type = 0;
 
         ColorGenerator.setColor(type, Color.WHITE);
+        ColorGenerator.setColor(type - 1, Color.BLACK);
     }
 
     @Override
@@ -33,12 +34,12 @@ public class SimpleGrainGrowth extends Growth {
         Grid previousGrid = new Grid(grid);
 
         changed = false;
-        grid.forEach(c -> {
-            List<Cell> neighbours = neighbourhood.listWithNeighbours(previousGrid, c);
+        grid.forEachCells(cell -> {
+            List<Cell> neighbours = neighbourhood.listWithNeighbours(previousGrid, cell);
 
-            if (c.getState() == 0 && anyNeighbourIsNucleating(neighbours)) {
+            if (cell.getState() == 0 && anyNeighbourIsNucleating(neighbours)) {
                 int state = getMostFrequentState(neighbours);
-                c.setState(state);
+                cell.setState(state);
                 changed = true;
             }
         });
@@ -80,7 +81,7 @@ public class SimpleGrainGrowth extends Growth {
 
     private boolean anyNeighbourIsNucleating(List<Cell> neighbours) {
 
-        return neighbours.stream().anyMatch(cell -> cell.getState() != 0);
+        return neighbours.stream().anyMatch(cell -> (cell.getState() != 0 && cell.getState() != -1));
     }
 
     public int getMostFrequentState(List<Cell> neighbours) {
@@ -90,17 +91,23 @@ public class SimpleGrainGrowth extends Growth {
 
         int max = 0;
         int mostState = 0;
+
         for (Cell cell: neighbours) {
+
             int state = cell.getState();
 
-            freq[state]++;
+            try {
+                freq[state + 1]++;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            if (freq[state] > max && state != 0) {
-                max = freq[state];
+            if (freq[state + 1] > max && state != 0 && state != -1) {
+                max = freq[state + 1];
                 mostState = state;
-            } else if (freq[state] == max && state != 0) {
+            } else if (freq[state + 1] == max && state != 0 && state != -1) {
                 if (random.nextDouble() > .5) {
-                    max = freq[state];
+                    max = freq[state + 1];
                     mostState = state;
                 }
             }

@@ -5,17 +5,26 @@ package vilgefortzz.edu.grain_growth.grid;
  */
 public class Cell {
 
+    public static final int INCLUSION_STATE = -1;
+    public static final int INITIALIZE_STATE = 0;
+
+    public static final int SQUARE_TYPE = 0;
+    public static final int CIRCULAR_TYPE = 1;
+
     private int x;
     private int y;
     private int phase;
     private int state;
+
+    private int type = SQUARE_TYPE;
+    private double radius = 0;
 
     public Cell(int x, int y) {
 
         this.x = x;
         this.y = y;
         this.phase = 0;
-        this.state = 0;
+        this.state = INITIALIZE_STATE;
     }
 
     public Cell(int x, int y, int state) {
@@ -56,5 +65,21 @@ public class Cell {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
     }
 }

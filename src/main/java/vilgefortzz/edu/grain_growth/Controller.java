@@ -223,8 +223,8 @@ public class Controller implements Initializable {
         int gridWidth = grid.getWidth();
         int gridHeight = grid.getHeight();
 
-        double cellWidth = width / gridWidth;
-        double cellHeight = height / gridHeight;
+        int cellWidth = width / gridWidth;
+        int cellHeight = height / gridHeight;
 
         if (cellWidth < cellHeight) {
             cellSize = cellWidth;
@@ -264,14 +264,25 @@ public class Controller implements Initializable {
     public void nucleating() throws Exception {
 
         Nucleating nucleating = nucleatingComboBox.getSelectionModel().getSelectedItem();
-        int n = Integer.parseInt(numberOfGrainsText.getText());
+        int numberOfGrains = Integer.parseInt(numberOfGrainsText.getText());
 
         solver.setNucleating(nucleating);
-        solver.nucleating(n);
+        solver.nucleating(numberOfGrains);
 
         draw(solver.getGrid());
 
         startButton.setDisable(false);
+    }
+
+    @FXML
+    public void addInclusions() throws Exception {
+
+        int amountOfInclusions = Integer.parseInt(amountOfInclusionsText.getText());
+        int type = typeOfInclusionComboBox.getSelectionModel().getSelectedIndex();
+
+        solver.addInclusions(amountOfInclusions, type);
+
+        draw(solver.getGrid());
     }
 
     @FXML
@@ -450,6 +461,7 @@ public class Controller implements Initializable {
                 startButton.setDisable(true);
                 stopButton.setDisable(true);
                 generateGridButton.setDisable(false);
+                addInclusionsButton.setDisable(false);
             }
 
             draw(grid);
@@ -463,11 +475,11 @@ public class Controller implements Initializable {
     }
 
     private void drawCells(Grid grid) {
-        grid.forEach(c -> {
-            graphicsContext.setFill(ColorGenerator.getColor(c.getState()));
+        grid.forEachCells(cell -> {
+            graphicsContext.setFill(ColorGenerator.getColor(cell.getState()));
             graphicsContext.fillRect(
-                    c.getX() * cellSize,
-                    c.getY() * cellSize,
+                    cell.getX() * cellSize,
+                    cell.getY() * cellSize,
                     cellSize,
                     cellSize
             );

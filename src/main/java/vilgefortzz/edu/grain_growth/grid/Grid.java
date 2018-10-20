@@ -2,6 +2,7 @@ package vilgefortzz.edu.grain_growth.grid;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
 
 /**
@@ -73,8 +74,26 @@ public class Grid {
         return cells.get(y * width + x);
     }
 
-    public void forEach(Consumer<Cell> f) {
-        cells.forEach(f);
+    public void addInclusions(int amountOfInclusions, int typeOfInclusion) {
+
+        Random random = new Random();
+
+        int x, y;
+        Cell cell;
+
+        for (int i = 0; i < amountOfInclusions; i++) {
+
+            x = random.nextInt(width);
+            y = random.nextInt(height);
+
+            cell = getCell(x, y);
+            cell.setState(Cell.INCLUSION_STATE);
+            cell.setType(typeOfInclusion);
+        }
+    }
+
+    public void forEachCells(Consumer<Cell> cell) {
+        cells.forEach(cell);
     }
 
     public int getWidth() {
@@ -97,14 +116,12 @@ public class Grid {
         data.add(Integer.toString(width) + " " + height);
 
         // Cell values
-        forEach(c -> {
-            data.add(
-                    Integer.toString(c.getX()) + " "
-                            + c.getY() + " "
-                            + c.getPhase() + " "
-                            + c.getState()
-            );
-        });
+        forEachCells(cell -> data.add(
+                Integer.toString(cell.getX()) + " "
+                        + cell.getY() + " "
+                        + cell.getPhase() + " "
+                        + cell.getState()
+        ));
 
         return data;
     }
