@@ -87,7 +87,7 @@ public class SimpleGrainGrowth extends Growth {
     public int getMostFrequentState(List<Cell> neighbours) {
 
         Random random = new Random();
-        int[] freq = new int[type + 1];
+        int[] freq = new int[type + 2];
 
         int max = 0;
         int mostState = 0;
