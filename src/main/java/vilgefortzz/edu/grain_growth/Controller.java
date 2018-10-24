@@ -114,6 +114,8 @@ public class Controller implements Initializable {
     @FXML
     private TextField amountOfInclusionsText;
     @FXML
+    private TextField sizeOfInclusionText;
+    @FXML
     public ComboBox<String> typeOfInclusionComboBox;
     @FXML
     private Button addInclusionsButton;
@@ -281,9 +283,10 @@ public class Controller implements Initializable {
     public void addInclusions() throws Exception {
 
         int amountOfInclusions = Integer.parseInt(amountOfInclusionsText.getText());
-        int type = typeOfInclusionComboBox.getSelectionModel().getSelectedIndex();
+        int sizeOfInclusion = Integer.parseInt(sizeOfInclusionText.getText());
+        int typeOfInclusion = typeOfInclusionComboBox.getSelectionModel().getSelectedIndex();
 
-        solver.addInclusions(amountOfInclusions, type);
+        solver.addInclusions(amountOfInclusions, sizeOfInclusion, typeOfInclusion);
 
         draw(solver.getGrid());
     }
@@ -490,21 +493,12 @@ public class Controller implements Initializable {
     private void drawSquareCells(Grid grid) {
         grid.forEachCells(cell -> {
             graphicsContext.setFill(ColorGenerator.getColor(cell.getState()));
-            if (cell.getState() == Cell.INCLUSION_STATE && cell.getType() == Cell.CIRCULAR_TYPE) {
-                graphicsContext.fillOval(
-                        cell.getX() * cellSize,
-                        cell.getY() * cellSize,
-                        cellSize,
-                        cellSize
-                );
-            } else {
-                graphicsContext.fillRect(
-                        cell.getX() * cellSize,
-                        cell.getY() * cellSize,
-                        cellSize,
-                        cellSize
-                );
-            }
+            graphicsContext.fillRect(
+                    cell.getX() * cellSize,
+                    cell.getY() * cellSize,
+                    cellSize,
+                    cellSize
+            );
         });
     }
 

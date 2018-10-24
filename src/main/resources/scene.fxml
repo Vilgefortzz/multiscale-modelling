@@ -160,6 +160,16 @@
                </font>
             </Button>
             <CheckBox fx:id="circularCheckBox" layoutX="231.0" layoutY="75.0" mnemonicParsing="false" text="circular" />
+            <Label layoutX="217.0" layoutY="437.0" text="size:">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="sizeOfInclusionText" layoutX="251.0" layoutY="432.0" prefHeight="26.0" prefWidth="45.0" text="5">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
          </children>
       </Pane>
       <Pane prefHeight="600.0" prefWidth="678.0">

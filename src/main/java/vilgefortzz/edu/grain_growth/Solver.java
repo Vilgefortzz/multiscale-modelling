@@ -1,8 +1,8 @@
 package vilgefortzz.edu.grain_growth;
 
-import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
+import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
 import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 
@@ -35,13 +35,13 @@ public class Solver {
         nucleating.nucleating(growth, grid, numberOfGrains);
     }
 
-    public void addInclusions(int amountOfInclusions, int typeOfInclusion) throws Exception {
+    public void addInclusions(int amountOfInclusions, int sizeOfInclusion, int typeOfInclusion) throws Exception {
 
         if (grid == null || growth == null) {
             throw new Exception("Options are not set correctly");
         }
 
-        grid.addInclusions(amountOfInclusions, typeOfInclusion);
+        grid.addInclusions(amountOfInclusions, sizeOfInclusion, typeOfInclusion, growth.isFinished());
     }
 
     public void switchState(Cell c){

@@ -17,7 +17,6 @@ public class Cell {
     private int state;
 
     private int type = SQUARE_TYPE;
-    private double radius = 0;
 
     public Cell(int x, int y) {
 
@@ -74,13 +73,5 @@ public class Cell {
 
     public void setType(int type) {
         this.type = type;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
 }

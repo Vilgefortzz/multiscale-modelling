@@ -78,22 +78,94 @@ public class Grid {
         return cells.get(y * width + x);
     }
 
-    public void addInclusions(int amountOfInclusions, int typeOfInclusion) {
+    public void addInclusions(int amountOfInclusions, int sizeOfInclusion,
+                              int typeOfInclusion, boolean onEdges) {
 
         Random random = new Random();
 
-        int x, y;
-        Cell cell;
+        if (onEdges) {
 
-        for (int i = 0; i < amountOfInclusions; i++) {
+            List<Cell> edgeCells = getEdgeCells();
 
-            x = random.nextInt(width);
-            y = random.nextInt(height);
+            for (int i = 0; i < amountOfInclusions; i++) {
 
-            cell = getCell(x, y);
-            cell.setState(Cell.INCLUSION_STATE);
-            cell.setType(typeOfInclusion);
+                int randomKey = random.nextInt(edgeCells.size());
+                Cell cell = edgeCells.get(randomKey);
+                addInclusion(cell.getX(), cell.getY(), sizeOfInclusion, typeOfInclusion);
+            }
+        } else {
+
+            for (int i = 0; i < amountOfInclusions; i++) {
+
+                int x = random.nextInt(width);
+                int y = random.nextInt(height);
+                addInclusion(x, y, sizeOfInclusion, typeOfInclusion);
+            }
         }
+    }
+
+    private void addInclusion(int x, int y, int sizeOfInclusion, int typeOfInclusion) {
+
+        if (typeOfInclusion == Cell.CIRCULAR_TYPE) {
+            addCircularInclusion(x, y, sizeOfInclusion);
+        } else {
+            addSquareInclusion(x, y, sizeOfInclusion);
+        }
+    }
+
+    private void addSquareInclusion(int x, int y, int sizeOfInclusion) {
+
+        for (int j = 0; j < sizeOfInclusion; j++) {
+            for (int k = 0; k < sizeOfInclusion; k++) {
+
+                Cell cell = getCell(x + j, y + k);
+
+                if (cell != null) {
+                    cell.setState(Cell.INCLUSION_STATE);
+                    cell.setType(Cell.SQUARE_TYPE);
+                }
+            }
+        }
+    }
+
+    private void addCircularInclusion(int x, int y, int sizeOfInclusion) {
+
+        Cell chosenCell = getCell(x, y);
+        chosenCell.setState(Cell.INCLUSION_STATE);
+        chosenCell.setType(Cell.CIRCULAR_TYPE);
+
+        forEachCells(cell -> {
+            double twoPointsDistance = Math.sqrt(Math.pow(cell.getX() - chosenCell.getX(), 2) +
+                    Math.pow(cell.getY() - chosenCell.getY(), 2));
+
+            if (twoPointsDistance <= sizeOfInclusion) {
+                cell.setState(Cell.INCLUSION_STATE);
+                cell.setType(Cell.CIRCULAR_TYPE);
+            }
+        });
+    }
+
+    private List<Cell> getEdgeCells() {
+
+        List<Cell> cells = new ArrayList<>();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+
+                Cell firstCell = getCell(x, y);
+                Cell secondCell = getCell(x + 1, y);
+                Cell thirdCell = getCell(x, y + 1);
+                Cell fourthCell = getCell(x + 1, y + 1);
+
+                if ((secondCell != null && firstCell.getState() != secondCell.getState())
+                        || (thirdCell != null && firstCell.getState() != thirdCell.getState())
+                        || (fourthCell != null && firstCell.getState() != fourthCell.getState())) {
+                    cells.add(firstCell);
+                }
+            }
+        }
+
+        return cells;
     }
 
     public void forEachCells(Consumer<Cell> cell) {
