@@ -3,8 +3,8 @@ package vilgefortzz.edu.grain_growth.growth;
 import javafx.scene.paint.Color;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
-import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
 import vilgefortzz.edu.grain_growth.image.ColorGenerator;
+import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
 
 import java.util.List;
 import java.util.Random;

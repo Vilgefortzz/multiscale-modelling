@@ -17,12 +17,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
+import vilgefortzz.edu.grain_growth.growth.BoundaryShapeControlGrainGrowth;
 import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.growth.SimpleGrainGrowth;
 import vilgefortzz.edu.grain_growth.image.ColorGenerator;
 import vilgefortzz.edu.grain_growth.image.ImageModifier;
-import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
-import vilgefortzz.edu.grain_growth.neighbourhood.VonNeumann;
+import vilgefortzz.edu.grain_growth.neighbourhood.*;
 import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
 
@@ -153,12 +153,16 @@ public class Controller implements Initializable {
 
     private void initializeOptions() {
 
-        algorithmComboBox.getItems().add(
-                new SimpleGrainGrowth()
+        algorithmComboBox.getItems().addAll(
+                new SimpleGrainGrowth(),
+                new BoundaryShapeControlGrainGrowth()
         );
 
-        neighbourhoodComboBox.getItems().add(
-                new VonNeumann()
+        neighbourhoodComboBox.getItems().addAll(
+                new VonNeumann(),
+                new Moore(),
+                new NearestMoore(),
+                new FurtherMoore()
         );
 
         nucleatingComboBox.getItems().add(
@@ -252,7 +256,6 @@ public class Controller implements Initializable {
         startButton.setDisable(true);
         stopButton.setDisable(false);
         nucleatingButton.setDisable(true);
-        addInclusionsButton.setDisable(true);
     }
 
     @FXML
@@ -472,7 +475,6 @@ public class Controller implements Initializable {
                 startButton.setDisable(true);
                 stopButton.setDisable(true);
                 generateGridButton.setDisable(false);
-                addInclusionsButton.setDisable(false);
             }
 
             draw(grid);
