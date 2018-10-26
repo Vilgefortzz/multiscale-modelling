@@ -35,6 +35,6 @@ public abstract class Growth implements Algorithm {
     }
 
     protected int createNewType() {
-        return type++;
+        return ++type;
     }
 }
