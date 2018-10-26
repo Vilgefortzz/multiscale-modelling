@@ -127,6 +127,8 @@ public class Controller implements Initializable {
     private Button startButton;
     @FXML
     private Button stopButton;
+    @FXML
+    private TextField probabilityText;
 
     /**
      * Export/Import
@@ -247,6 +249,7 @@ public class Controller implements Initializable {
     @FXML
     public void start() throws Exception {
 
+        solver.getGrowth().setProbability(Integer.parseInt(probabilityText.getText()));
         if (stepController.getState() != Worker.State.READY) {
             stepController.restart();
         } else {

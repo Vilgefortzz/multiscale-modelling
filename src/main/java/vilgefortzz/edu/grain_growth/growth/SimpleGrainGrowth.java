@@ -14,10 +14,6 @@ import java.util.Random;
  */
 public class SimpleGrainGrowth extends Growth {
 
-    private boolean finished;
-    private boolean changed;
-    private int type;
-
     @Override
     public void initialize(Grid grid) {
 
@@ -32,8 +28,8 @@ public class SimpleGrainGrowth extends Growth {
     public void mark(Grid grid, Neighbourhood neighbourhood) {
 
         Grid previousGrid = new Grid(grid);
-
         changed = false;
+
         grid.forEachCells(cell -> {
             List<Cell> neighbours = neighbourhood.listWithNeighbours(previousGrid, cell);
 
@@ -53,30 +49,6 @@ public class SimpleGrainGrowth extends Growth {
         if (cell.getState() == 0) {
             cell.setState(createNewType());
         }
-    }
-
-    @Override
-    public boolean isFinished() {
-        return finished;
-    }
-
-    @Override
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    @Override
-    public int getType() {
-        return type;
-    }
-
-    @Override
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int createNewType() {
-        return type++;
     }
 
     private boolean anyNeighbourIsNucleating(List<Cell> neighbours) {

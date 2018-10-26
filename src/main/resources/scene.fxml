@@ -170,6 +170,21 @@
                   <Font size="12.0" />
                </font>
             </TextField>
+            <Label layoutX="165.0" layoutY="568.0" text="probability:">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="probabilityText" layoutX="242.0" layoutY="564.0" prefHeight="26.0" prefWidth="45.0" text="90">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label layoutX="297.0" layoutY="570.0" text="\%">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane prefHeight="600.0" prefWidth="678.0">
