@@ -45,7 +45,6 @@ public class Controller implements Initializable {
      */
     private final String MICROSTRUCTURES_FILES_DIR_PATH = "microstructures/files/";
     private final String MICROSTRUCTURES_IMAGES_DIR_PATH = "microstructures/images/";
-    private final String MICROSTRUCTURES_IMAGES_PATH = "file:microstructures/images/";
 
     /**
      * Graphics properties
@@ -121,7 +120,7 @@ public class Controller implements Initializable {
     private Button addInclusionsButton;
 
     /**
-     * Algorithm
+     * Start/stop growth simulation
      */
     @FXML
     private Button startButton;
