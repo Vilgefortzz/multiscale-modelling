@@ -79,7 +79,7 @@ public class BoundaryShapeControlGrainGrowth extends Growth {
     public int getMostFrequentState(List<Cell> neighbours, int minAmount, int maxAmount) {
 
         Random random = new Random();
-        int[] freq = new int[type + 2];
+        int[] freq = new int[type + 1];
 
         int max = 0;
         int mostState = 0;
@@ -87,25 +87,26 @@ public class BoundaryShapeControlGrainGrowth extends Growth {
         for (Cell cell: neighbours) {
 
             int state = cell.getState();
+            if (state == Cell.STRUCTURE_STATE || state == Cell.INCLUSION_STATE) continue;
 
             try {
-                freq[state + 1]++;
+                freq[state]++;
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            if (freq[state + 1] > max && state != 0 && state != -1) {
-                max = freq[state + 1];
+            if (freq[state] > max && state != Cell.INITIALIZE_STATE) {
+                max = freq[state];
                 mostState = state;
-            } else if (freq[state + 1] == max && state != 0 && state != -1) {
+            } else if (freq[state] == max && state != Cell.INITIALIZE_STATE) {
                 if (random.nextDouble() > .5) {
-                    max = freq[state + 1];
+                    max = freq[state];
                     mostState = state;
                 }
             }
         }
 
-        if (freq[mostState + 1] >= minAmount && freq[mostState + 1] <= maxAmount) {
+        if (freq[mostState] >= minAmount && freq[mostState] <= maxAmount) {
             return mostState;
         } else {
             return 0;

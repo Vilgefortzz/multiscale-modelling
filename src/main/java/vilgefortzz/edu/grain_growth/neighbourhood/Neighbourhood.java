@@ -21,10 +21,4 @@ public abstract class Neighbourhood implements Neighbours {
             cells.add(cell);
         }
     }
-
-    protected void addCellToList(List<Cell> list, Cell cell){
-        if (cell != null){
-            list.add(cell);
-        }
-    }
 }

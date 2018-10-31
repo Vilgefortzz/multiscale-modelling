@@ -5,6 +5,7 @@ package vilgefortzz.edu.grain_growth.grid;
  */
 public class Cell {
 
+    public static final int STRUCTURE_STATE = -2;
     public static final int INCLUSION_STATE = -1;
     public static final int INITIALIZE_STATE = 0;
 
