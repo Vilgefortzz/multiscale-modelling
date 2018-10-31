@@ -1,5 +1,6 @@
 package vilgefortzz.edu.grain_growth.structure;
 
+import javafx.scene.paint.Color;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.Growth;
@@ -11,7 +12,7 @@ import java.util.Random;
 /**
  * Created by vilgefortzz on 30/10/18
  */
-public class Substructure implements Structure {
+public class DualPhase implements Structure {
 
     @Override
     public List<Cell> selectGrains(Growth growth, Grid grid) {
@@ -19,7 +20,7 @@ public class Substructure implements Structure {
         Random random = new Random();
         int randomState = (random.nextInt(growth.getType()) + 1);
 
-        ColorGenerator.setColor(Cell.STRUCTURE_STATE, ColorGenerator.getColor(randomState));
+        ColorGenerator.setColor(Cell.STRUCTURE_STATE, Color.PINK);
 
         grid.forEachCells(cell -> {
             if (cell.getState() == randomState) {
@@ -34,6 +35,6 @@ public class Substructure implements Structure {
 
     @Override
     public String toString() {
-        return "Substructure";
+        return "Dual phase";
     }
 }
