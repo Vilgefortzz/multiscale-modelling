@@ -25,6 +25,9 @@ import vilgefortzz.edu.grain_growth.image.ImageModifier;
 import vilgefortzz.edu.grain_growth.neighbourhood.*;
 import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
+import vilgefortzz.edu.grain_growth.structure.DualPhase;
+import vilgefortzz.edu.grain_growth.structure.Structure;
+import vilgefortzz.edu.grain_growth.structure.Substructure;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -120,6 +123,12 @@ public class Controller implements Initializable {
     private Button addInclusionsButton;
 
     /**
+     * Structure
+     */
+    @FXML
+    public ComboBox<Structure> structureComboBox;
+
+    /**
      * Start/stop growth simulation
      */
     @FXML
@@ -175,6 +184,11 @@ public class Controller implements Initializable {
                 "circular"
         );
 
+        structureComboBox.getItems().addAll(
+                new Substructure(),
+                new DualPhase()
+        );
+
         algorithmComboBox.getSelectionModel().selectFirst();
         neighbourhoodComboBox.getSelectionModel().selectFirst();
         nucleatingComboBox.getSelectionModel().selectFirst();
@@ -187,7 +201,16 @@ public class Controller implements Initializable {
         int columns = Integer.parseInt(columnsText.getText());
         int rows = Integer.parseInt(rowsText.getText());
 
-        generateGrid(columns, rows, null, circularCheckBox.isSelected());
+        List<Cell> cells = null;
+        Structure structure = structureComboBox.getSelectionModel().getSelectedItem();
+
+        if (structure != null && solver.getGrowth() != null &&
+                solver.getGrid() != null && stepController.isFinished()) {
+            solver.setStructure(structure);
+            cells = solver.selectGrains();
+        }
+
+        generateGrid(columns, rows, cells, circularCheckBox.isSelected());
     }
 
     private void generateGrid(int columns, int rows, List<Cell> cells, boolean isCircular) throws Exception {
@@ -477,6 +500,7 @@ public class Controller implements Initializable {
                 startButton.setDisable(true);
                 stopButton.setDisable(true);
                 generateGridButton.setDisable(false);
+                structureComboBox.setDisable(false);
             }
 
             draw(grid);

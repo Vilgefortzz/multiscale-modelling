@@ -5,6 +5,9 @@ import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
 import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
+import vilgefortzz.edu.grain_growth.structure.Structure;
+
+import java.util.List;
 
 /**
  * Created by vilgefortzz on 08/10/18
@@ -16,6 +19,7 @@ public class Solver {
     private Growth growth;
     private Neighbourhood neighbourhood;
     private Nucleating nucleating;
+    private Structure structure;
 
     public void initialize() throws Exception {
 
@@ -44,40 +48,57 @@ public class Solver {
         grid.addInclusions(amountOfInclusions, sizeOfInclusion, typeOfInclusion, growth.isFinished());
     }
 
+    public List<Cell> selectGrains() throws Exception {
+
+        if (grid == null || growth == null) {
+            throw new Exception("Options are not set correctly");
+        }
+
+        return structure.selectGrains(growth, grid);
+    }
+
     public void switchState(Cell c){
         growth.changeState(c);
     }
 
-    public void setGrowth(Growth growth){
-        this.growth = growth;
-    }
-
-    public Growth getGrowth() {
-        return growth;
-    }
-
-    public void setNeighbourhood(Neighbourhood neighbourhood) {
-        this.neighbourhood = neighbourhood;
-    }
-
-    public Neighbourhood getNeighbourhood() {
-        return neighbourhood;
-    }
-
-    public void setNucleating(Nucleating nucleating) {
-        this.nucleating = nucleating;
-    }
-
-    public Nucleating getNucleating() {
-        return nucleating;
+    public Grid getGrid() {
+        return grid;
     }
 
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
 
-    public Grid getGrid() {
-        return grid;
+    public Growth getGrowth() {
+        return growth;
+    }
+
+    public void setGrowth(Growth growth){
+        this.growth = growth;
+    }
+
+    public Neighbourhood getNeighbourhood() {
+        return neighbourhood;
+    }
+
+    public void setNeighbourhood(Neighbourhood neighbourhood) {
+        this.neighbourhood = neighbourhood;
+    }
+
+    public Nucleating getNucleating() {
+        return nucleating;
+    }
+
+    public void setNucleating(Nucleating nucleating) {
+        this.nucleating = nucleating;
+    }
+
+    public Structure getStructure() {
+        return structure;
+    }
+
+    public void setStructure(Structure structure) {
+        this.structure = structure;
     }
 
     public Grid realizeStep() {

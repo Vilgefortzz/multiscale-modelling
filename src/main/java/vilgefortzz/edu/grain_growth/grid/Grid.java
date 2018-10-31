@@ -188,6 +188,10 @@ public class Grid {
         return getCellCyclic(x, y);
     }
 
+    public List<Cell> getCells() {
+        return cells;
+    }
+
     public List<String> prepareData() {
 
         List<String> data = new ArrayList<>();
