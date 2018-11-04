@@ -5,6 +5,7 @@ import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.image.ColorGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,15 +15,24 @@ import java.util.Random;
 public class Substructure implements Structure {
 
     @Override
-    public List<Cell> selectGrains(Growth growth, Grid grid) {
+    public List<Cell> selectGrains(Growth growth, Grid grid, int numberOfStructures) {
 
         Random random = new Random();
-        int randomState = (random.nextInt(growth.getType()) + 1);
+        List<Integer> randomStates = new ArrayList<>();
 
-        ColorGenerator.setColor(Cell.STRUCTURE_STATE, ColorGenerator.getColor(randomState));
+        for (int i = 0; i < numberOfStructures; i++) {
+
+            int randomState = (random.nextInt(growth.getType()) + 1);
+            while (randomStates.contains(randomState)) {
+                randomState = (random.nextInt(growth.getType()) + 1);
+            }
+            randomStates.add(randomState);
+        }
+
+        ColorGenerator.setColor(Cell.STRUCTURE_STATE, ColorGenerator.getColor(randomStates.get(0)));
 
         grid.forEachCells(cell -> {
-            if (cell.getState() == randomState) {
+            if (randomStates.contains(cell.getState())) {
                 cell.setState(Cell.STRUCTURE_STATE);
             } else if (cell.getState() != Cell.INCLUSION_STATE) {
                 cell.setState(Cell.INITIALIZE_STATE);

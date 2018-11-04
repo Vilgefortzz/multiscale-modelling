@@ -48,13 +48,13 @@ public class Solver {
         grid.addInclusions(amountOfInclusions, sizeOfInclusion, typeOfInclusion, growth.isFinished());
     }
 
-    public List<Cell> selectGrains() throws Exception {
+    public List<Cell> selectGrains(int numberOfStructures) throws Exception {
 
         if (grid == null || growth == null) {
             throw new Exception("Options are not set correctly");
         }
 
-        return structure.selectGrains(growth, grid);
+        return structure.selectGrains(growth, grid, numberOfStructures);
     }
 
     public void switchState(Cell c){

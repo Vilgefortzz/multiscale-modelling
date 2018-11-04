@@ -127,6 +127,8 @@ public class Controller implements Initializable {
      */
     @FXML
     public ComboBox<Structure> structureComboBox;
+    @FXML
+    private TextField numberOfStructuresText;
 
     /**
      * Start/stop growth simulation
@@ -206,8 +208,9 @@ public class Controller implements Initializable {
 
         if (structure != null && solver.getGrowth() != null &&
                 solver.getGrid() != null && stepController.isFinished()) {
+            int numberOfStructures = Integer.parseInt(numberOfStructuresText.getText());
             solver.setStructure(structure);
-            cells = solver.selectGrains();
+            cells = solver.selectGrains(numberOfStructures);
         }
 
         generateGrid(columns, rows, cells, circularCheckBox.isSelected());

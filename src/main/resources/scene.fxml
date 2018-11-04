@@ -191,8 +191,18 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <ComboBox fx:id="structureComboBox" disable="true" layoutX="98.0" layoutY="441.0" prefHeight="26.0" prefWidth="150.0" />
+            <ComboBox fx:id="structureComboBox" disable="true" layoutX="98.0" layoutY="441.0" prefHeight="26.0" prefWidth="118.0" />
             <Separator layoutX="16.0" layoutY="474.0" prefHeight="3.0" prefWidth="294.0" />
+            <Label layoutX="226.0" layoutY="447.0" text="amount:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="numberOfStructuresText" layoutX="277.0" layoutY="441.0" prefHeight="26.0" prefWidth="31.0" text="2">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </TextField>
          </children>
       </Pane>
       <Pane prefHeight="600.0" prefWidth="678.0">

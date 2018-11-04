@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface Structure {
 
-    List<Cell> selectGrains(Growth growth, Grid grid);
+    List<Cell> selectGrains(Growth growth, Grid grid, int numberOfStructures);
 }
