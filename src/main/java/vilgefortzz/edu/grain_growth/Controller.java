@@ -15,6 +15,9 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import vilgefortzz.edu.grain_growth.grain.AllGrains;
+import vilgefortzz.edu.grain_growth.grain.GrainSelection;
+import vilgefortzz.edu.grain_growth.grain.NGrains;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.BoundaryShapeControlGrainGrowth;
@@ -131,6 +134,16 @@ public class Controller implements Initializable {
     private TextField numberOfStructuresText;
 
     /**
+     * Structure
+     */
+    @FXML
+    public ComboBox<GrainSelection> grainSelectionComboBox;
+    @FXML
+    private TextField numberOfSelectedGrainsText;
+    @FXML
+    private Button selectGrainsButton;
+
+    /**
      * Start/stop growth simulation
      */
     @FXML
@@ -187,14 +200,21 @@ public class Controller implements Initializable {
         );
 
         structureComboBox.getItems().addAll(
+                null,
                 new Substructure(),
                 new DualPhase()
+        );
+
+        grainSelectionComboBox.getItems().addAll(
+                new AllGrains(),
+                new NGrains()
         );
 
         algorithmComboBox.getSelectionModel().selectFirst();
         neighbourhoodComboBox.getSelectionModel().selectFirst();
         nucleatingComboBox.getSelectionModel().selectFirst();
         typeOfInclusionComboBox.getSelectionModel().selectFirst();
+        grainSelectionComboBox.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -323,6 +343,16 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void selectEdgeGrains() throws Exception {
+
+        int numberOfGrains = Integer.parseInt(numberOfSelectedGrainsText.getText());
+
+        List<Cell> cells = solver.selectEdgeGrains(numberOfGrains);
+        generateGrid(solver.getGrid().getWidth(), solver.getGrid().getHeight(),
+                cells, circularCheckBox.isSelected());
+    }
+
+    @FXML
     public void importFromFile() throws Exception {
 
         FileChooser chooser = new FileChooser();
@@ -368,6 +398,8 @@ public class Controller implements Initializable {
             solver.getGrowth().setFinished(isFinished);
             if (!isFinished) {
                 startButton.setDisable(false);
+            } else {
+                selectGrainsButton.setDisable(false);
             }
         }
     }
@@ -444,6 +476,7 @@ public class Controller implements Initializable {
             solver.getGrowth().setType(ColorGenerator.type);
             if (cells.stream().noneMatch(cell -> cell.getState() == 0)) {
                 solver.getGrowth().setFinished(true);
+                selectGrainsButton.setDisable(false);
             } else {
                 startButton.setDisable(false);
             }
@@ -490,10 +523,12 @@ public class Controller implements Initializable {
 
         Growth growth = algorithmComboBox.getSelectionModel().getSelectedItem();
         Neighbourhood neighbourhood = neighbourhoodComboBox.getSelectionModel().getSelectedItem();
+        GrainSelection grainSelection = grainSelectionComboBox.getSelectionModel().getSelectedItem();
 
         solver.setGrid(grid);
         solver.setGrowth(growth);
         solver.setNeighbourhood(neighbourhood);
+        solver.setGrainSelection(grainSelection);
     }
 
     private void nextStep(Grid grid) {
@@ -504,6 +539,8 @@ public class Controller implements Initializable {
                 stopButton.setDisable(true);
                 generateGridButton.setDisable(false);
                 structureComboBox.setDisable(false);
+                grainSelectionComboBox.setDisable(false);
+                selectGrainsButton.setDisable(false);
             }
 
             draw(grid);

@@ -1,5 +1,6 @@
 package vilgefortzz.edu.grain_growth;
 
+import vilgefortzz.edu.grain_growth.grain.GrainSelection;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.Growth;
@@ -20,6 +21,7 @@ public class Solver {
     private Neighbourhood neighbourhood;
     private Nucleating nucleating;
     private Structure structure;
+    private GrainSelection grainSelection;
 
     public void initialize() throws Exception {
 
@@ -55,6 +57,15 @@ public class Solver {
         }
 
         return structure.selectGrains(growth, grid, numberOfStructures);
+    }
+
+    public List<Cell> selectEdgeGrains(int numberOfGrains) throws Exception {
+
+        if (grid == null || growth == null) {
+            throw new Exception("Options are not set correctly");
+        }
+
+        return grainSelection.selectEdgeGrains(growth, grid, numberOfGrains);
     }
 
     public void switchState(Cell c){
@@ -99,6 +110,14 @@ public class Solver {
 
     public void setStructure(Structure structure) {
         this.structure = structure;
+    }
+
+    public GrainSelection getGrainSelection() {
+        return grainSelection;
+    }
+
+    public void setGrainSelection(GrainSelection grainSelection) {
+        this.grainSelection = grainSelection;
     }
 
     public Grid realizeStep() {

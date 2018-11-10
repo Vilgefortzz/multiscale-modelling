@@ -147,7 +147,7 @@ public class Grid {
         });
     }
 
-    private List<Cell> getEdgeCells() {
+    public List<Cell> getEdgeCells() {
 
         List<Cell> cells = new ArrayList<>();
 
