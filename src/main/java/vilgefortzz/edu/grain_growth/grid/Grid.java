@@ -30,13 +30,15 @@ public class Grid {
 
         this.width = existingGrid.width;
         this.height = existingGrid.height;
-
         this.cells = new ArrayList<>();
-        for (Cell cell : existingGrid.cells) {
-            Cell nc = new Cell(cell.getX(), cell.getY());
-            nc.setState(cell.getState());
 
-            cells.add(nc);
+        for (Cell cell : existingGrid.cells) {
+
+            Cell newCell = new Cell(cell.getX(), cell.getY());
+            newCell.setState(cell.getState());
+            newCell.setChangable(cell.isChangable());
+
+            cells.add(newCell);
         }
     }
 

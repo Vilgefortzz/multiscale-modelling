@@ -3,7 +3,6 @@ package vilgefortzz.edu.grain_growth.structure;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.Growth;
-import vilgefortzz.edu.grain_growth.image.ColorGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +28,12 @@ public class Substructure implements Structure {
             randomStates.add(randomState);
         }
 
-        ColorGenerator.setColor(Cell.STRUCTURE_STATE, ColorGenerator.getColor(randomStates.get(0)));
-
         grid.forEachCells(cell -> {
             if (randomStates.contains(cell.getState())) {
-                cell.setState(Cell.STRUCTURE_STATE);
+                cell.setChangable(false);
+                if (growth.getType() < cell.getState()) {
+                    growth.setType(cell.getState());
+                }
             } else if (cell.getState() != Cell.INCLUSION_STATE) {
                 cell.setState(Cell.INITIALIZE_STATE);
             }

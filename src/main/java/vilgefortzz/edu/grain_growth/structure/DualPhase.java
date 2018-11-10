@@ -30,8 +30,6 @@ public class DualPhase implements Structure {
             randomStates.add(randomState);
         }
 
-        ColorGenerator.setColor(Cell.STRUCTURE_STATE, Color.PINK);
-
         grid.forEachCells(cell -> {
             if (randomStates.contains(cell.getState())) {
                 cell.setState(Cell.STRUCTURE_STATE);

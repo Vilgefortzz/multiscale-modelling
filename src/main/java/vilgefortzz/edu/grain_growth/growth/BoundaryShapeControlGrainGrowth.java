@@ -35,10 +35,12 @@ public class BoundaryShapeControlGrainGrowth extends Growth {
     public void initialize(Grid grid) {
 
         finished = false;
-        type = 0;
+        if (type != 0) return;
 
-        ColorGenerator.setColor(type, Color.WHITE);
-        ColorGenerator.setColor(type - 1, Color.BLACK);
+        type = 0;
+        ColorGenerator.setColor(Cell.INITIALIZE_STATE, Color.WHITE);
+        ColorGenerator.setColor(Cell.INCLUSION_STATE, Color.BLACK);
+        ColorGenerator.setColor(Cell.STRUCTURE_STATE, Color.PINK);
     }
 
     @Override
@@ -87,7 +89,7 @@ public class BoundaryShapeControlGrainGrowth extends Growth {
         for (Cell cell: neighbours) {
 
             int state = cell.getState();
-            if (state == Cell.STRUCTURE_STATE || state == Cell.INCLUSION_STATE) continue;
+            if (!cell.isChangable() || state == Cell.STRUCTURE_STATE || state == Cell.INCLUSION_STATE) continue;
 
             try {
                 freq[state]++;

@@ -16,6 +16,7 @@ public class Cell {
     private int y;
     private int phase;
     private int state;
+    private boolean changable = true;
 
     private int type = SQUARE_TYPE;
 
@@ -66,6 +67,14 @@ public class Cell {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public boolean isChangable() {
+        return changable;
+    }
+
+    public void setChangable(boolean changable) {
+        this.changable = changable;
     }
 
     public int getType() {
