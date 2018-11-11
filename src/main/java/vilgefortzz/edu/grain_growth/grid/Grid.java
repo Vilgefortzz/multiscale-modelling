@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Created by vilgefortzz on 07/10/18
@@ -147,27 +148,59 @@ public class Grid {
         });
     }
 
+    public List<Cell> getCells() {
+        return cells;
+    }
+
+    public List<Cell> getEdgeCells(List<Cell> edgeCells, int state) {
+        return edgeCells.stream().filter(cell -> cell.getState() == state).collect(Collectors.toList());
+    }
+
     public List<Cell> getEdgeCells() {
 
-        List<Cell> cells = new ArrayList<>();
+        List<Cell> edgeCells = new ArrayList<>();
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        forEachCells(cell -> {
 
-                Cell firstCell = getCell(x, y);
-                Cell secondCell = getCell(x + 1, y);
-                Cell thirdCell = getCell(x, y + 1);
-                Cell fourthCell = getCell(x + 1, y + 1);
+            List<Cell> neighbours = new ArrayList<>();
 
-                if ((secondCell != null && firstCell.getState() != secondCell.getState())
-                        || (thirdCell != null && firstCell.getState() != thirdCell.getState())
-                        || (fourthCell != null && firstCell.getState() != fourthCell.getState())) {
-                    cells.add(firstCell);
-                }
+            neighbours.add(getCell(cell.getX() + 1, cell.getY()));
+            neighbours.add(getCell(cell.getX(), cell.getY() + 1));
+            neighbours.add(getCell(cell.getX() + 1, cell.getY() + 1));
+
+            if (neighbours.stream().anyMatch(neighbour -> neighbour.getState() != cell.getState())) {
+                edgeCells.add(cell);
             }
-        }
+        });
 
-        return cells;
+        return edgeCells;
+    }
+
+    public List<Cell> getEdgeSelectionCells() {
+
+        List<Cell> edgeCells = new ArrayList<>();
+
+        forEachCells(cell -> {
+
+            List<Cell> neighbours = new ArrayList<>();
+
+            neighbours.add(getCell(cell.getX() + 1, cell.getY()));
+            neighbours.add(getCell(cell.getX() - 1, cell.getY()));
+
+            neighbours.add(getCell(cell.getX(), cell.getY() + 1));
+            neighbours.add(getCell(cell.getX(), cell.getY() - 1));
+
+            neighbours.add(getCell(cell.getX() + 1, cell.getY() + 1));
+            neighbours.add(getCell(cell.getX() - 1, cell.getY() + 1));
+            neighbours.add(getCell(cell.getX() + 1, cell.getY() - 1));
+            neighbours.add(getCell(cell.getX() - 1, cell.getY() - 1));
+
+            if (neighbours.stream().anyMatch(neighbour -> neighbour.getState() != cell.getState())) {
+                edgeCells.add(cell);
+            }
+        });
+
+        return edgeCells;
     }
 
     public void forEachCells(Consumer<Cell> cell) {
@@ -188,10 +221,6 @@ public class Grid {
 
     public Cell getCell(int x, int y) {
         return getCellCyclic(x, y);
-    }
-
-    public List<Cell> getCells() {
-        return cells;
     }
 
     public List<String> prepareData() {

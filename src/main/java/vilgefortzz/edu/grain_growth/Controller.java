@@ -345,6 +345,8 @@ public class Controller implements Initializable {
     @FXML
     public void selectEdgeGrains() throws Exception {
 
+        GrainSelection grainSelection = grainSelectionComboBox.getSelectionModel().getSelectedItem();
+        solver.setGrainSelection(grainSelection);
         int numberOfGrains = Integer.parseInt(numberOfSelectedGrainsText.getText());
 
         List<Cell> cells = solver.selectEdgeGrains(numberOfGrains);
