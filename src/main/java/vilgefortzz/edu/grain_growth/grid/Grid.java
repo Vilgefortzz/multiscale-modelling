@@ -24,7 +24,7 @@ public class Grid {
         this.height = height;
         this.isCircular = isCircular;
 
-        initailizeGrid();
+        initializeGrid();
     }
 
     public Grid(Grid existingGrid) {
@@ -52,13 +52,35 @@ public class Grid {
         this.cells = cells;
     }
 
-    private void initailizeGrid() {
+    public Grid(int width, int height, boolean isCircular, int numberOfStates) {
+
+        this.width = width;
+        this.height = height;
+        this.isCircular = isCircular;
+
+        initializeGrid(numberOfStates);
+    }
+
+    private void initializeGrid() {
 
         cells = new ArrayList<>();
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 cells.add(new Cell(x, y));
+            }
+        }
+    }
+
+    private void initializeGrid(int numberOfStates) {
+
+        Random random = new Random();
+        cells = new ArrayList<>();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int randomState = random.nextInt(numberOfStates) + 1;
+                cells.add(new Cell(x, y, randomState));
             }
         }
     }
@@ -213,6 +235,10 @@ public class Grid {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getSize(){
+        return width * height;
     }
 
     public boolean isCircular() {

@@ -22,6 +22,7 @@ import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.BoundaryShapeControlGrainGrowth;
 import vilgefortzz.edu.grain_growth.growth.Growth;
+import vilgefortzz.edu.grain_growth.growth.MonteCarloGrainGrowth;
 import vilgefortzz.edu.grain_growth.growth.SimpleGrainGrowth;
 import vilgefortzz.edu.grain_growth.image.ColorGenerator;
 import vilgefortzz.edu.grain_growth.image.ImageModifier;
@@ -39,6 +40,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -180,7 +182,8 @@ public class Controller implements Initializable {
 
         algorithmComboBox.getItems().addAll(
                 new SimpleGrainGrowth(),
-                new BoundaryShapeControlGrainGrowth()
+                new BoundaryShapeControlGrainGrowth(),
+                new MonteCarloGrainGrowth()
         );
 
         neighbourhoodComboBox.getItems().addAll(
@@ -269,11 +272,17 @@ public class Controller implements Initializable {
     private Grid createGrid(int columns, int rows, boolean isCircular, List<Cell> cells) {
 
         Grid grid;
+        Growth growth = algorithmComboBox.getSelectionModel().getSelectedItem();
 
         if (cells != null) {
             grid = new Grid(columns, rows, isCircular, cells);
         } else {
-            grid = new Grid(columns, rows, isCircular);
+            if (Objects.equals(growth.toString(), "Monte Carlo grain growth")) {
+                int numberOfGrains = Integer.parseInt(numberOfGrainsText.getText());
+                grid = new Grid(columns, rows, isCircular, numberOfGrains);
+            } else {
+                grid = new Grid(columns, rows, isCircular);
+            }
         }
 
         int gridWidth = grid.getWidth();
