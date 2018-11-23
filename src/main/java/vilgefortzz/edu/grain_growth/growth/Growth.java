@@ -10,6 +10,11 @@ public abstract class Growth implements Algorithm {
     protected int type;
     protected int probability;
 
+    /**
+     * Monte Carlo grain boundary energy
+     */
+    protected double grainBoundaryEnergy;
+
     public boolean isFinished() {
         return finished;
     }
@@ -32,6 +37,14 @@ public abstract class Growth implements Algorithm {
 
     public void setProbability(int probability) {
         this.probability = probability;
+    }
+
+    public double getGrainBoundaryEnergy() {
+        return grainBoundaryEnergy;
+    }
+
+    public void setGrainBoundaryEnergy(double grainBoundaryEnergy) {
+        this.grainBoundaryEnergy = grainBoundaryEnergy;
     }
 
     protected int createNewType() {
