@@ -65,7 +65,7 @@
                   <Font name="System Bold" size="11.0" />
                </font>
             </Button>
-            <ComboBox fx:id="nucleatingComboBox" layoutX="56.0" layoutY="245.0" prefHeight="26.0" prefWidth="157.0" />
+            <ComboBox fx:id="nucleatingComboBox" layoutX="56.0" layoutY="245.0" prefHeight="26.0" prefWidth="135.0" />
             <Label layoutX="22.0" layoutY="251.0" text="type:">
                <font>
                   <Font size="11.0" />
@@ -171,17 +171,17 @@
                   <Font size="11.0" />
                </font>
             </TextField>
-            <Label layoutX="155.0" layoutY="621.0" text="probability:">
+            <Label layoutX="207.0" layoutY="621.0" text="probability:">
                <font>
                   <Font size="11.0" />
                </font>
             </Label>
-            <TextField fx:id="probabilityText" layoutX="223.0" layoutY="615.0" prefHeight="26.0" prefWidth="45.0" text="90">
+            <TextField fx:id="probabilityText" layoutX="275.0" layoutY="615.0" prefHeight="26.0" prefWidth="31.0" text="90">
                <font>
                   <Font size="11.0" />
                </font>
             </TextField>
-            <Label layoutX="272.0" layoutY="621.0" text="\%">
+            <Label layoutX="312.0" layoutY="621.0" text="\%">
                <font>
                   <Font size="11.0" />
                </font>
@@ -230,6 +230,26 @@
                   <Font name="System Bold" size="11.0" />
                </font>
             </Button>
+            <TextField fx:id="grainBoundaryEnergyText" layoutX="251.0" layoutY="245.0" prefHeight="26.0" prefWidth="45.0" text="1.0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <Label layoutX="205.0" layoutY="251.0" text="energy:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="128.0" layoutY="621.0" text="MCS:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="MCSText" layoutX="163.0" layoutY="615.0" prefHeight="26.0" prefWidth="31.0" text="0">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </TextField>
          </children>
       </Pane>
       <Pane prefHeight="600.0" prefWidth="678.0">

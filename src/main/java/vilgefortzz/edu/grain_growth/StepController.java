@@ -10,14 +10,14 @@ import vilgefortzz.edu.grain_growth.grid.Grid;
 public class StepController extends ScheduledService<Grid> {
 
     private Solver solver;
-    private int iteration;
+    private int step;
 
     public void initialize() {
-        iteration = 0;
+        step = 0;
     }
 
-    public int getIteration() {
-        return iteration;
+    public int getStep() {
+        return step;
     }
 
     public void setSolver(Solver solver) {
@@ -28,6 +28,10 @@ public class StepController extends ScheduledService<Grid> {
         return solver.getGrowth().isFinished();
     }
 
+    public void setFinished(boolean isFinished) {
+        this.solver.getGrowth().setFinished(isFinished);
+    }
+
     @Override
     protected Task<Grid> createTask() {
         return new Task<Grid>() {
@@ -35,7 +39,7 @@ public class StepController extends ScheduledService<Grid> {
             protected Grid call() throws Exception {
 
                 if (isFinished()) cancel();
-                iteration++;
+                step++;
 
                 return solver.realizeStep();
             }

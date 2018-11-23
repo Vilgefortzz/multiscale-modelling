@@ -58,7 +58,6 @@ public class Controller implements Initializable {
      * Graphics properties
      */
     private GraphicsContext graphicsContext;
-    private final int DELAY = 60;
 
     private int width;
     private int height;
@@ -75,6 +74,8 @@ public class Controller implements Initializable {
      * Growing step controller - iteration
      */
     private final StepController stepController = new StepController();
+    private final int DELAY = 60;
+    private int MCS;
 
     /**
      * Solver
@@ -111,6 +112,8 @@ public class Controller implements Initializable {
     @FXML
     private ComboBox<Nucleating> nucleatingComboBox;
     @FXML
+    private TextField grainBoundaryEnergyText;
+    @FXML
     private TextField numberOfGrainsText;
     @FXML
     private Button nucleatingButton;
@@ -136,7 +139,7 @@ public class Controller implements Initializable {
     private TextField numberOfStructuresText;
 
     /**
-     * Structure
+     * Grain selection
      */
     @FXML
     public ComboBox<GrainSelection> grainSelectionComboBox;
@@ -152,6 +155,8 @@ public class Controller implements Initializable {
     private Button startButton;
     @FXML
     private Button stopButton;
+    @FXML
+    private TextField MCSText;
     @FXML
     private TextField probabilityText;
 
@@ -280,6 +285,7 @@ public class Controller implements Initializable {
             if (Objects.equals(growth.toString(), "Monte Carlo grain growth")) {
                 int numberOfGrains = Integer.parseInt(numberOfGrainsText.getText());
                 grid = new Grid(columns, rows, isCircular, numberOfGrains);
+                startButton.setDisable(false);
             } else {
                 grid = new Grid(columns, rows, isCircular);
             }
@@ -304,6 +310,9 @@ public class Controller implements Initializable {
     public void start() throws Exception {
 
         solver.getGrowth().setProbability(Integer.parseInt(probabilityText.getText()));
+        solver.getGrowth().setGrainBoundaryEnergy(Double.parseDouble(grainBoundaryEnergyText.getText()));
+        MCS = Integer.parseInt(MCSText.getText());
+
         if (stepController.getState() != Worker.State.READY) {
             stepController.restart();
         } else {
@@ -545,7 +554,22 @@ public class Controller implements Initializable {
     private void nextStep(Grid grid) {
 
         Platform.runLater(() -> {
+
+            int step = stepController.getStep();
+
+            if (MCS != 0 && step >= MCS) {
+
+                stop();
+                structureComboBox.setDisable(false);
+                startButton.setDisable(true);
+                solver.getGrowth().setFinished(true);
+
+                int numberOfStates = Integer.parseInt(numberOfGrainsText.getText());
+                solver.getGrowth().setType(numberOfStates);
+            }
+
             if (stepController.isFinished()) {
+
                 startButton.setDisable(true);
                 stopButton.setDisable(true);
                 generateGridButton.setDisable(false);
