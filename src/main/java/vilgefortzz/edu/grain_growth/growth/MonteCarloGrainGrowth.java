@@ -19,8 +19,11 @@ public class MonteCarloGrainGrowth extends Growth {
     @Override
     public void initialize(Grid grid) {
 
+        finished = false;
         random = new Random();
         ColorGenerator.setColor(Cell.INITIALIZE_STATE, Color.WHITE);
+        ColorGenerator.setColor(Cell.INCLUSION_STATE, Color.BLACK);
+        ColorGenerator.setColor(Cell.STRUCTURE_STATE, Color.PINK);
     }
 
     @Override
