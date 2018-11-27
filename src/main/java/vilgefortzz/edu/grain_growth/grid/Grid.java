@@ -61,6 +61,15 @@ public class Grid {
         initializeGrid(numberOfStates);
     }
 
+    public Grid(int width, int height, boolean isCircular, int numberOfStates, List<Cell> cells) {
+
+        this.width = width;
+        this.height = height;
+        this.isCircular = isCircular;
+
+        initializeGrid(numberOfStates, cells);
+    }
+
     private void initializeGrid() {
 
         cells = new ArrayList<>();
@@ -83,6 +92,21 @@ public class Grid {
                 cells.add(new Cell(x, y, randomState));
             }
         }
+    }
+
+    private void initializeGrid(int numberOfStates, List<Cell> structureCells) {
+
+        Random random = new Random();
+        cells = new ArrayList<>();
+
+        structureCells.forEach(structureCell -> {
+            if (structureCell.getState() == Cell.STRUCTURE_STATE) {
+                cells.add(new Cell(structureCell.getX(), structureCell.getY(), Cell.STRUCTURE_STATE));
+            } else {
+                int randomState = random.nextInt(numberOfStates) + 1;
+                cells.add(new Cell(structureCell.getX(), structureCell.getY(), randomState));
+            }
+        });
     }
 
     private Cell getCellCyclic(int x, int y) {

@@ -8,6 +8,7 @@ import vilgefortzz.edu.grain_growth.neighbourhood.Neighbourhood;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Created by vilgefortzz on 22/11/18
@@ -34,11 +35,17 @@ public class MonteCarloGrainGrowth extends Growth {
 
         for (int i = 0; i < grid.getSize(); i++) {
 
-            int cellX = random.nextInt(grid.getWidth());
-            int cellY = random.nextInt(grid.getHeight());
+            do {
 
-            cell = grid.getCell(cellX, cellY);
+                int cellX = random.nextInt(grid.getWidth());
+                int cellY = random.nextInt(grid.getHeight());
+                cell = grid.getCell(cellX, cellY);
+            } while (cell.getState() == Cell.STRUCTURE_STATE);
+
             neighbours = neighbourhood.listWithNeighbours(grid, cell);
+
+            if (neighbours.stream().noneMatch(neighbour -> neighbour.getState() != Cell.STRUCTURE_STATE))
+                continue;
 
             double energyBefore = getEnergy(cell.getState(), neighbours);
             int newState = getNeighbourState(neighbours);
@@ -61,7 +68,9 @@ public class MonteCarloGrainGrowth extends Growth {
 
     private int getNeighbourState(List<Cell> neighbours) {
 
-        return neighbours.get(random.nextInt(neighbours.size())).getState();
+        List<Cell> spaceCells = neighbours.stream().filter(cell -> cell.getState() != Cell.STRUCTURE_STATE)
+                .collect(Collectors.toList());
+        return spaceCells.get(random.nextInt(spaceCells.size())).getState();
     }
 
     @Override

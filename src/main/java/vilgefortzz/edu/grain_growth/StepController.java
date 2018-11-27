@@ -32,6 +32,10 @@ public class StepController extends ScheduledService<Grid> {
         this.solver.getGrowth().setFinished(isFinished);
     }
 
+    public void clearStep() {
+        this.step = 0;
+    }
+
     @Override
     protected Task<Grid> createTask() {
         return new Task<Grid>() {

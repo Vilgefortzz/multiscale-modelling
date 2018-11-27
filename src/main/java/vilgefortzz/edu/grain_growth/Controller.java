@@ -230,12 +230,10 @@ public class Controller implements Initializable {
 
         int columns = Integer.parseInt(columnsText.getText());
         int rows = Integer.parseInt(rowsText.getText());
-
         List<Cell> cells = null;
         Structure structure = structureComboBox.getSelectionModel().getSelectedItem();
 
-        if (structure != null && solver.getGrowth() != null &&
-                solver.getGrid() != null && stepController.isFinished()) {
+        if (structure != null && solver.getGrowth() != null && solver.getGrid() != null) {
             int numberOfStructures = Integer.parseInt(numberOfStructuresText.getText());
             solver.setStructure(structure);
             cells = solver.selectGrains(numberOfStructures);
@@ -280,7 +278,13 @@ public class Controller implements Initializable {
         Growth growth = algorithmComboBox.getSelectionModel().getSelectedItem();
 
         if (cells != null) {
-            grid = new Grid(columns, rows, isCircular, cells);
+            if (Objects.equals(growth.toString(), "Monte Carlo grain growth")) {
+                int numberOfGrains = Integer.parseInt(numberOfGrainsText.getText());
+                grid = new Grid(columns, rows, isCircular, numberOfGrains, cells);
+                startButton.setDisable(false);
+            } else {
+                grid = new Grid(columns, rows, isCircular, cells);
+            }
         } else {
             if (Objects.equals(growth.toString(), "Monte Carlo grain growth")) {
                 int numberOfGrains = Integer.parseInt(numberOfGrainsText.getText());
@@ -559,10 +563,9 @@ public class Controller implements Initializable {
 
             if (MCS != 0 && step >= MCS) {
 
+                stepController.clearStep();
                 stop();
                 structureComboBox.setDisable(false);
-                startButton.setDisable(true);
-                solver.getGrowth().setFinished(true);
 
                 int numberOfStates = Integer.parseInt(numberOfGrainsText.getText());
                 solver.getGrowth().setType(numberOfStates);
