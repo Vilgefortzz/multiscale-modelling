@@ -16,7 +16,8 @@ public class Cell {
     private int y;
     private int phase;
     private int state;
-    private boolean changable = true;
+    private boolean changeable = true;
+    private boolean recrystallized;
 
     private int type = SQUARE_TYPE;
 
@@ -69,12 +70,12 @@ public class Cell {
         this.state = state;
     }
 
-    public boolean isChangable() {
-        return changable;
+    public boolean isChangeable() {
+        return changeable;
     }
 
-    public void setChangable(boolean changable) {
-        this.changable = changable;
+    public void setChangeable(boolean changeable) {
+        this.changeable = changeable;
     }
 
     public int getType() {
@@ -83,5 +84,13 @@ public class Cell {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public boolean isRecrystallized() {
+        return recrystallized;
+    }
+
+    public void setRecrystallized(boolean recrystallized) {
+        this.recrystallized = recrystallized;
     }
 }

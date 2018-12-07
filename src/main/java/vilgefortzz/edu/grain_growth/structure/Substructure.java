@@ -30,7 +30,7 @@ public class Substructure implements Structure {
 
         grid.forEachCells(cell -> {
             if (randomStates.contains(cell.getState())) {
-                cell.setChangable(false);
+                cell.setChangeable(false);
                 if (growth.getType() < cell.getState()) {
                     growth.setType(cell.getState());
                 }

@@ -56,7 +56,7 @@ public class SimpleGrainGrowth extends Growth {
     private boolean anyNeighbourIsNucleating(List<Cell> neighbours) {
 
         return neighbours.stream().anyMatch(cell -> (
-                cell.getState() != 0 && cell.getState() != -1 && cell.isChangable())
+                cell.getState() != 0 && cell.getState() != -1 && cell.isChangeable())
         );
     }
 
@@ -71,7 +71,7 @@ public class SimpleGrainGrowth extends Growth {
         for (Cell cell: neighbours) {
 
             int state = cell.getState();
-            if (!cell.isChangable() || state == Cell.STRUCTURE_STATE || state == Cell.INCLUSION_STATE) continue;
+            if (!cell.isChangeable() || state == Cell.STRUCTURE_STATE || state == Cell.INCLUSION_STATE) continue;
 
             try {
                 freq[state]++;

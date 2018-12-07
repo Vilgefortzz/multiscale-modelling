@@ -89,7 +89,7 @@ public class BoundaryShapeControlGrainGrowth extends Growth {
         for (Cell cell: neighbours) {
 
             int state = cell.getState();
-            if (!cell.isChangable() || state == Cell.STRUCTURE_STATE || state == Cell.INCLUSION_STATE) continue;
+            if (!cell.isChangeable() || state == Cell.STRUCTURE_STATE || state == Cell.INCLUSION_STATE) continue;
 
             try {
                 freq[state]++;

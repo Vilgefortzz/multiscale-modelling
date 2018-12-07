@@ -37,7 +37,7 @@ public class Grid {
 
             Cell newCell = new Cell(cell.getX(), cell.getY());
             newCell.setState(cell.getState());
-            newCell.setChangable(cell.isChangable());
+            newCell.setChangeable(cell.isChangeable());
 
             cells.add(newCell);
         }
