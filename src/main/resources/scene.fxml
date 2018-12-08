@@ -79,17 +79,17 @@
                   <Font size="12.0" />
                </font></TextField>
             <Separator layoutX="21.0" layoutY="252.0" prefHeight="3.0" prefWidth="294.0" />
-            <Label layoutX="18.0" layoutY="620.0" text="Growth" underline="true">
+            <Label layoutX="18.0" layoutY="607.0" text="Growth" underline="true">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="startButton" disable="true" layoutX="16.0" layoutY="641.0" mnemonicParsing="false" onAction="#start" text="START" textFill="#1d8d13">
+            <Button fx:id="startButton" disable="true" layoutX="77.0" layoutY="606.0" mnemonicParsing="false" onAction="#start" text="START" textFill="#1d8d13">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Button>
-            <Button fx:id="stopButton" disable="true" layoutX="70.0" layoutY="641.0" mnemonicParsing="false" onAction="#stop" text="STOP" textFill="#b21717">
+            <Button fx:id="stopButton" disable="true" layoutX="131.0" layoutY="606.0" mnemonicParsing="false" onAction="#stop" text="STOP" textFill="#b21717">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
@@ -99,33 +99,33 @@
                   <Font name="System Bold" size="11.0" />
                </font>
             </Button>
-            <Separator layoutX="16.0" layoutY="674.0" prefHeight="3.0" prefWidth="294.0" />
-            <Label layoutX="16.0" layoutY="683.0" text="File" underline="true">
+            <Separator layoutX="21.0" layoutY="638.0" prefHeight="3.0" prefWidth="294.0" />
+            <Label layoutX="17.0" layoutY="648.0" text="File" underline="true">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="importFromFileButton" layoutX="14.0" layoutY="702.0" mnemonicParsing="false" onAction="#importFromFile" text="Import">
+            <Button fx:id="importFromFileButton" layoutX="15.0" layoutY="672.0" mnemonicParsing="false" onAction="#importFromFile" text="Import">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Button>
-            <Button fx:id="exportToFileButton" disable="true" layoutX="70.0" layoutY="702.0" mnemonicParsing="false" onAction="#exportToFile" text="Export">
+            <Button fx:id="exportToFileButton" disable="true" layoutX="73.0" layoutY="672.0" mnemonicParsing="false" onAction="#exportToFile" text="Export">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Button>
-            <Label layoutX="162.0" layoutY="683.0" text="Bitmap" underline="true">
+            <Label layoutX="162.0" layoutY="648.0" text="Bitmap" underline="true">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="importFromBitmapButton" layoutX="160.0" layoutY="702.0" mnemonicParsing="false" onAction="#importFromBitmap" text="Import">
+            <Button fx:id="importFromBitmapButton" layoutX="159.0" layoutY="672.0" mnemonicParsing="false" onAction="#importFromBitmap" text="Import">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
             </Button>
-            <Button fx:id="exportToBitmapButton" disable="true" layoutX="217.0" layoutY="702.0" mnemonicParsing="false" onAction="#exportToBitmap" text="Export">
+            <Button fx:id="exportToBitmapButton" disable="true" layoutX="217.0" layoutY="672.0" mnemonicParsing="false" onAction="#exportToBitmap" text="Export">
                <font>
                   <Font name="System Bold" size="11.0" />
                </font>
@@ -171,17 +171,17 @@
                   <Font size="11.0" />
                </font>
             </TextField>
-            <Label layoutX="207.0" layoutY="645.0" text="probability:">
+            <Label layoutX="188.0" layoutY="610.0" text="probability:">
                <font>
                   <Font size="11.0" />
                </font>
             </Label>
-            <TextField fx:id="probabilityText" layoutX="275.0" layoutY="639.0" prefHeight="26.0" prefWidth="31.0" text="90">
+            <TextField fx:id="probabilityText" layoutX="253.0" layoutY="604.0" prefHeight="26.0" prefWidth="31.0" text="90">
                <font>
                   <Font size="11.0" />
                </font>
             </TextField>
-            <Label layoutX="307.0" layoutY="645.0" text="\%">
+            <Label layoutX="285.0" layoutY="610.0" text="\%">
                <font>
                   <Font size="11.0" />
                </font>
@@ -240,17 +240,59 @@
                   <Font size="11.0" />
                </font>
             </Label>
-            <Label layoutX="127.0" layoutY="645.0" text="MCS:">
+            <Label layoutX="220.0" layoutY="572.0" text="MCS:">
                <font>
                   <Font size="11.0" />
                </font>
             </Label>
-            <TextField fx:id="MCSText" layoutX="166.0" layoutY="639.0" prefHeight="26.0" prefWidth="31.0" text="0">
+            <TextField fx:id="MCSText" layoutX="253.0" layoutY="566.0" prefHeight="26.0" prefWidth="31.0" text="0">
                <font>
                   <Font size="11.0" />
                </font>
             </TextField>
-            <Separator layoutX="19.0" layoutY="610.0" prefHeight="3.0" prefWidth="294.0" />
+            <Separator layoutX="19.0" layoutY="599.0" prefHeight="3.0" prefWidth="294.0" />
+            <Label layoutX="16.0" layoutY="470.0" text="MC Static recrystalization" textFill="#2bbab8" underline="true">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="494.0" text="Energy distribution">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="energyDistributionComboBox" disable="true" layoutX="23.0" layoutY="508.0" prefHeight="26.0" prefWidth="118.0" />
+            <Label layoutX="156.0" layoutY="494.0" text="E inside">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="energyInsideText" layoutX="162.0" layoutY="508.0" prefHeight="26.0" prefWidth="31.0" text="2">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </TextField>
+            <Label layoutX="215.0" layoutY="494.0" text="E on edges">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField fx:id="energyOnEdgesText" layoutX="230.0" layoutY="508.0" prefHeight="26.0" prefWidth="31.0" text="7">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </TextField>
+            <Button fx:id="showEnergyButton" disable="true" layoutX="219.0" layoutY="541.0" mnemonicParsing="false" onAction="#showEnergy" text="Show energy" textFill="#2bbab8">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Button>
+            <Label layoutX="39.0" layoutY="545.0" text="Nucleation module">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="nucleationModuleComboBox" disable="true" layoutX="23.0" layoutY="559.0" prefHeight="26.0" prefWidth="118.0" />
          </children>
       </Pane>
       <Pane prefHeight="600.0" prefWidth="678.0">

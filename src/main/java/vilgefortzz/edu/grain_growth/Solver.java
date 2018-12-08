@@ -1,5 +1,6 @@
 package vilgefortzz.edu.grain_growth;
 
+import vilgefortzz.edu.grain_growth.energy_distribution.EnergyDistribution;
 import vilgefortzz.edu.grain_growth.grain.GrainSelection;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
@@ -22,6 +23,11 @@ public class Solver {
     private Nucleating nucleating;
     private Structure structure;
     private GrainSelection grainSelection;
+
+    /**
+     * MC Static recrystalization
+     */
+    private EnergyDistribution energyDistribution;
 
     public void initialize() throws Exception {
 
@@ -66,6 +72,15 @@ public class Solver {
         }
 
         return grainSelection.selectEdgeGrains(growth, grid, numberOfGrains);
+    }
+
+    public void showEnergy(int energyInside, int energyOnEdges) throws Exception {
+
+        if (grid == null || growth == null) {
+            throw new Exception("Options are not set correctly");
+        }
+
+        energyDistribution.showEnergy(growth, grid, energyInside, energyOnEdges);
     }
 
     public void switchState(Cell c){
@@ -118,6 +133,14 @@ public class Solver {
 
     public void setGrainSelection(GrainSelection grainSelection) {
         this.grainSelection = grainSelection;
+    }
+
+    public EnergyDistribution getEnergyDistribution() {
+        return energyDistribution;
+    }
+
+    public void setEnergyDistribution(EnergyDistribution energyDistribution) {
+        this.energyDistribution = energyDistribution;
     }
 
     public Grid realizeStep() {

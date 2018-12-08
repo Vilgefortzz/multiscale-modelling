@@ -1,10 +1,8 @@
 package vilgefortzz.edu.grain_growth.structure;
 
-import javafx.scene.paint.Color;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
 import vilgefortzz.edu.grain_growth.growth.Growth;
-import vilgefortzz.edu.grain_growth.image.ColorGenerator;
 
 import java.util.ArrayList;
 import java.util.List;

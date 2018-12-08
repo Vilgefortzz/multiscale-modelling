@@ -5,6 +5,8 @@ package vilgefortzz.edu.grain_growth.grid;
  */
 public class Cell {
 
+    public static final int ENERGY_ON_EDGES_STATE = -4;
+    public static final int ENERGY_INSIDE_STATE = -3;
     public static final int STRUCTURE_STATE = -2;
     public static final int INCLUSION_STATE = -1;
     public static final int INITIALIZE_STATE = 0;
@@ -17,6 +19,8 @@ public class Cell {
     private int phase;
     private int state;
     private boolean changeable = true;
+
+    private int energyDistribution;
     private boolean recrystallized;
 
     private int type = SQUARE_TYPE;
@@ -84,6 +88,14 @@ public class Cell {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getEnergyDistribution() {
+        return energyDistribution;
+    }
+
+    public void setEnergyDistribution(int energyDistribution) {
+        this.energyDistribution = energyDistribution;
     }
 
     public boolean isRecrystallized() {

@@ -21,6 +21,8 @@ public class SimpleGrainGrowth extends Growth {
         if (type != 0) return;
 
         type = 0;
+        ColorGenerator.setColor(Cell.ENERGY_ON_EDGES_STATE, Color.LIGHTGREEN);
+        ColorGenerator.setColor(Cell.ENERGY_INSIDE_STATE, Color.BLUE);
         ColorGenerator.setColor(Cell.INITIALIZE_STATE, Color.WHITE);
         ColorGenerator.setColor(Cell.INCLUSION_STATE, Color.BLACK);
         ColorGenerator.setColor(Cell.STRUCTURE_STATE, Color.PINK);

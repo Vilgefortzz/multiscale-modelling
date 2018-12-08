@@ -15,6 +15,9 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import vilgefortzz.edu.grain_growth.energy_distribution.EnergyDistribution;
+import vilgefortzz.edu.grain_growth.energy_distribution.Heterogeneous;
+import vilgefortzz.edu.grain_growth.energy_distribution.Homogeneous;
 import vilgefortzz.edu.grain_growth.grain.AllGrains;
 import vilgefortzz.edu.grain_growth.grain.GrainSelection;
 import vilgefortzz.edu.grain_growth.grain.NGrains;
@@ -29,6 +32,9 @@ import vilgefortzz.edu.grain_growth.image.ImageModifier;
 import vilgefortzz.edu.grain_growth.neighbourhood.*;
 import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
+import vilgefortzz.edu.grain_growth.nucleation_module.Constant;
+import vilgefortzz.edu.grain_growth.nucleation_module.NucleationModule;
+import vilgefortzz.edu.grain_growth.nucleation_module.SiteSaturated;
 import vilgefortzz.edu.grain_growth.structure.DualPhase;
 import vilgefortzz.edu.grain_growth.structure.Structure;
 import vilgefortzz.edu.grain_growth.structure.Substructure;
@@ -149,6 +155,20 @@ public class Controller implements Initializable {
     private Button selectGrainsButton;
 
     /**
+     * MC Static recrystalization
+     */
+    @FXML
+    public ComboBox<EnergyDistribution> energyDistributionComboBox;
+    @FXML
+    private TextField energyInsideText;
+    @FXML
+    private TextField energyOnEdgesText;
+    @FXML
+    public ComboBox<NucleationModule> nucleationModuleComboBox;
+    @FXML
+    private Button showEnergyButton;
+
+    /**
      * Start/stop growth simulation
      */
     @FXML
@@ -218,11 +238,23 @@ public class Controller implements Initializable {
                 new NGrains()
         );
 
+        energyDistributionComboBox.getItems().addAll(
+                new Homogeneous(),
+                new Heterogeneous()
+        );
+
+        nucleationModuleComboBox.getItems().addAll(
+                new SiteSaturated(),
+                new Constant()
+        );
+
         algorithmComboBox.getSelectionModel().selectFirst();
         neighbourhoodComboBox.getSelectionModel().selectFirst();
         nucleatingComboBox.getSelectionModel().selectFirst();
         typeOfInclusionComboBox.getSelectionModel().selectFirst();
         grainSelectionComboBox.getSelectionModel().selectFirst();
+        energyDistributionComboBox.getSelectionModel().selectFirst();
+        nucleationModuleComboBox.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -377,6 +409,19 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void showEnergy() throws Exception {
+
+        EnergyDistribution energyDistribution = energyDistributionComboBox.getSelectionModel().getSelectedItem();
+        int energyInside = Integer.parseInt(energyInsideText.getText());
+        int energyOnEdges = Integer.parseInt(energyOnEdgesText.getText());
+
+        solver.setEnergyDistribution(energyDistribution);
+        solver.showEnergy(energyInside, energyOnEdges);
+
+        draw(solver.getGrid());
+    }
+
+    @FXML
     public void importFromFile() throws Exception {
 
         FileChooser chooser = new FileChooser();
@@ -424,6 +469,7 @@ public class Controller implements Initializable {
                 startButton.setDisable(false);
             } else {
                 selectGrainsButton.setDisable(false);
+                showEnergyButton.setDisable(false);
             }
         }
     }
@@ -501,6 +547,7 @@ public class Controller implements Initializable {
             if (cells.stream().noneMatch(cell -> cell.getState() == 0)) {
                 solver.getGrowth().setFinished(true);
                 selectGrainsButton.setDisable(false);
+                showEnergyButton.setDisable(false);
             } else {
                 startButton.setDisable(false);
             }
@@ -579,6 +626,8 @@ public class Controller implements Initializable {
                 structureComboBox.setDisable(false);
                 grainSelectionComboBox.setDisable(false);
                 selectGrainsButton.setDisable(false);
+                energyDistributionComboBox.setDisable(false);
+                showEnergyButton.setDisable(false);
             }
 
             draw(grid);
