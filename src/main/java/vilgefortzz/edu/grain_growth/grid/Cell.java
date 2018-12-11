@@ -5,6 +5,7 @@ package vilgefortzz.edu.grain_growth.grid;
  */
 public class Cell {
 
+    public static final int RECRYSTALLIZED_STATE = -5;
     public static final int ENERGY_ON_EDGES_STATE = -4;
     public static final int ENERGY_INSIDE_STATE = -3;
     public static final int STRUCTURE_STATE = -2;
@@ -22,6 +23,7 @@ public class Cell {
 
     private int energyDistribution;
     private boolean recrystallized;
+    private int previousState;
 
     private int type = SQUARE_TYPE;
 
@@ -48,6 +50,14 @@ public class Cell {
         this.phase = phase;
         this.state = state;
         this.type = type;
+    }
+
+    public void savePreviousState() {
+        this.previousState = this.state;
+    }
+
+    public void restorePreviousState() {
+        this.state = this.previousState;
     }
 
     public int getX() {
@@ -104,5 +114,13 @@ public class Cell {
 
     public void setRecrystallized(boolean recrystallized) {
         this.recrystallized = recrystallized;
+    }
+
+    public int getPreviousState() {
+        return previousState;
+    }
+
+    public void setPreviousState(int previousState) {
+        this.previousState = previousState;
     }
 }

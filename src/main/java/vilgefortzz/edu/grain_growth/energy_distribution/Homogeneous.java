@@ -10,12 +10,25 @@ import vilgefortzz.edu.grain_growth.growth.Growth;
 public class Homogeneous implements EnergyDistribution {
 
     @Override
+    public void calculateEnergy(Growth growth, Grid grid, int energyInside, int energyOnEdges) {
+
+        grid.forEachCells(cell -> {
+            cell.setEnergyDistribution(energyInside);
+        });
+    }
+
+    @Override
     public void showEnergy(Growth growth, Grid grid, int energyInside, int energyOnEdges) {
 
         grid.forEachCells(cell -> {
+            cell.savePreviousState();
             cell.setState(Cell.ENERGY_INSIDE_STATE);
-            cell.setEnergyDistribution(energyInside);
         });
+    }
+
+    @Override
+    public void showMicrostructure(Growth growth, Grid grid, int energyInside, int energyOnEdges) {
+        grid.forEachCells(Cell::restorePreviousState);
     }
 
     @Override

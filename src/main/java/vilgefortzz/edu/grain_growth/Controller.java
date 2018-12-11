@@ -8,8 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
@@ -23,10 +22,7 @@ import vilgefortzz.edu.grain_growth.grain.GrainSelection;
 import vilgefortzz.edu.grain_growth.grain.NGrains;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
-import vilgefortzz.edu.grain_growth.growth.BoundaryShapeControlGrainGrowth;
-import vilgefortzz.edu.grain_growth.growth.Growth;
-import vilgefortzz.edu.grain_growth.growth.MonteCarloGrainGrowth;
-import vilgefortzz.edu.grain_growth.growth.SimpleGrainGrowth;
+import vilgefortzz.edu.grain_growth.growth.*;
 import vilgefortzz.edu.grain_growth.image.ColorGenerator;
 import vilgefortzz.edu.grain_growth.image.ImageModifier;
 import vilgefortzz.edu.grain_growth.neighbourhood.*;
@@ -166,7 +162,9 @@ public class Controller implements Initializable {
     @FXML
     public ComboBox<NucleationModule> nucleationModuleComboBox;
     @FXML
-    private Button showEnergyButton;
+    private Button calculateEnergyButton;
+    @FXML
+    private ToggleButton showEnergyToggleButton;
 
     /**
      * Start/stop growth simulation
@@ -208,7 +206,8 @@ public class Controller implements Initializable {
         algorithmComboBox.getItems().addAll(
                 new SimpleGrainGrowth(),
                 new BoundaryShapeControlGrainGrowth(),
-                new MonteCarloGrainGrowth()
+                new MonteCarloGrainGrowth(),
+                new MonteCarloStaticRecrystallization()
         );
 
         neighbourhoodComboBox.getItems().addAll(
@@ -409,14 +408,42 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void showEnergy() throws Exception {
+    public void calculateEnergy() throws Exception {
 
+        solver.getGrowth().setGrainBoundaryEnergy(Double.parseDouble(grainBoundaryEnergyText.getText()));
+        Growth growth = algorithmComboBox.getSelectionModel().getSelectedItem();
         EnergyDistribution energyDistribution = energyDistributionComboBox.getSelectionModel().getSelectedItem();
         int energyInside = Integer.parseInt(energyInsideText.getText());
         int energyOnEdges = Integer.parseInt(energyOnEdgesText.getText());
 
+        solver.setGrowth(growth);
         solver.setEnergyDistribution(energyDistribution);
-        solver.showEnergy(energyInside, energyOnEdges);
+        solver.calculateEnergy(energyInside, energyOnEdges);
+
+        nucleatingButton.setDisable(false);
+
+        draw(solver.getGrid());
+    }
+
+    @FXML
+    public void showEnergy() throws Exception {
+
+        solver.getGrowth().setGrainBoundaryEnergy(Double.parseDouble(grainBoundaryEnergyText.getText()));
+        Growth growth = algorithmComboBox.getSelectionModel().getSelectedItem();
+        EnergyDistribution energyDistribution = energyDistributionComboBox.getSelectionModel().getSelectedItem();
+        int energyInside = Integer.parseInt(energyInsideText.getText());
+        int energyOnEdges = Integer.parseInt(energyOnEdgesText.getText());
+
+        solver.setGrowth(growth);
+        solver.setEnergyDistribution(energyDistribution);
+
+        if (!showEnergyToggleButton.isSelected()) {
+            solver.showMicrostructure(energyInside, energyOnEdges);
+        } else {
+            solver.showEnergy(energyInside, energyOnEdges);
+        }
+
+        nucleatingButton.setDisable(false);
 
         draw(solver.getGrid());
     }
@@ -469,7 +496,7 @@ public class Controller implements Initializable {
                 startButton.setDisable(false);
             } else {
                 selectGrainsButton.setDisable(false);
-                showEnergyButton.setDisable(false);
+                showEnergyToggleButton.setDisable(false);
             }
         }
     }
@@ -547,7 +574,7 @@ public class Controller implements Initializable {
             if (cells.stream().noneMatch(cell -> cell.getState() == 0)) {
                 solver.getGrowth().setFinished(true);
                 selectGrainsButton.setDisable(false);
-                showEnergyButton.setDisable(false);
+                showEnergyToggleButton.setDisable(false);
             } else {
                 startButton.setDisable(false);
             }
@@ -627,7 +654,8 @@ public class Controller implements Initializable {
                 grainSelectionComboBox.setDisable(false);
                 selectGrainsButton.setDisable(false);
                 energyDistributionComboBox.setDisable(false);
-                showEnergyButton.setDisable(false);
+                calculateEnergyButton.setDisable(false);
+                showEnergyToggleButton.setDisable(false);
             }
 
             draw(grid);

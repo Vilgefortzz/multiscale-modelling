@@ -12,21 +12,42 @@ import java.util.List;
 public class Heterogeneous implements EnergyDistribution {
 
     @Override
-    public void showEnergy(Growth growth, Grid grid, int energyInside, int energyOnEdges) {
+    public void calculateEnergy(Growth growth, Grid grid, int energyInside, int energyOnEdges) {
 
         List<Cell> edgeCells = grid.getEdgeCells();
         edgeCells.forEach(edgeCell -> {
             Cell cell = grid.getCell(edgeCell.getX(), edgeCell.getY());
-            cell.setState(Cell.ENERGY_ON_EDGES_STATE);
             cell.setEnergyDistribution(energyOnEdges);
         });
 
         grid.forEachCells(cell -> {
             if (!edgeCells.contains(cell)) {
-                cell.setState(Cell.ENERGY_INSIDE_STATE);
                 cell.setEnergyDistribution(energyInside);
             }
         });
+    }
+
+    @Override
+    public void showEnergy(Growth growth, Grid grid, int energyInside, int energyOnEdges) {
+
+        List<Cell> edgeCells = grid.getEdgeCells();
+        edgeCells.forEach(edgeCell -> {
+            Cell cell = grid.getCell(edgeCell.getX(), edgeCell.getY());
+            cell.savePreviousState();
+            cell.setState(Cell.ENERGY_ON_EDGES_STATE);
+        });
+
+        grid.forEachCells(cell -> {
+            if (!edgeCells.contains(cell)) {
+                cell.savePreviousState();
+                cell.setState(Cell.ENERGY_INSIDE_STATE);
+            }
+        });
+    }
+
+    @Override
+    public void showMicrostructure(Growth growth, Grid grid, int energyInside, int energyOnEdges) {
+        grid.forEachCells(Cell::restorePreviousState);
     }
 
     @Override

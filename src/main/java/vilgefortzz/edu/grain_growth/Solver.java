@@ -74,6 +74,15 @@ public class Solver {
         return grainSelection.selectEdgeGrains(growth, grid, numberOfGrains);
     }
 
+    public void calculateEnergy(int energyInside, int energyOnEdges) throws Exception {
+
+        if (grid == null || growth == null) {
+            throw new Exception("Options are not set correctly");
+        }
+
+        energyDistribution.calculateEnergy(growth, grid, energyInside, energyOnEdges);
+    }
+
     public void showEnergy(int energyInside, int energyOnEdges) throws Exception {
 
         if (grid == null || growth == null) {
@@ -81,6 +90,15 @@ public class Solver {
         }
 
         energyDistribution.showEnergy(growth, grid, energyInside, energyOnEdges);
+    }
+
+    public void showMicrostructure(int energyInside, int energyOnEdges) throws Exception {
+
+        if (grid == null || growth == null) {
+            throw new Exception("Options are not set correctly");
+        }
+
+        energyDistribution.showMicrostructure(growth, grid, energyInside, energyOnEdges);
     }
 
     public void switchState(Cell c){

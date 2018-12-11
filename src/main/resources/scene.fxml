@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -282,17 +283,22 @@
                   <Font size="11.0" />
                </font>
             </TextField>
-            <Button fx:id="showEnergyButton" disable="true" layoutX="219.0" layoutY="541.0" mnemonicParsing="false" onAction="#showEnergy" text="Show energy" textFill="#2bbab8">
-               <font>
-                  <Font name="System Bold" size="11.0" />
-               </font>
-            </Button>
-            <Label layoutX="39.0" layoutY="545.0" text="Nucleation module">
+            <Label layoutX="30.0" layoutY="545.0" text="Nucleation module">
                <font>
                   <Font size="11.0" />
                </font>
             </Label>
             <ComboBox fx:id="nucleationModuleComboBox" disable="true" layoutX="23.0" layoutY="559.0" prefHeight="26.0" prefWidth="118.0" />
+            <Button fx:id="calculateEnergyButton" disable="true" layoutX="168.0" layoutY="541.0" mnemonicParsing="false" onAction="#calculateEnergy" text="Calculate E" textFill="#2bbab8">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </Button>
+            <ToggleButton fx:id="showEnergyToggleButton" layoutX="254.0" disable="true" layoutY="541.0" mnemonicParsing="false" onAction="#showEnergy" text="Show E" textFill="#2bbab8">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </ToggleButton>
          </children>
       </Pane>
       <Pane prefHeight="600.0" prefWidth="678.0">

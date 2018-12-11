@@ -8,5 +8,7 @@ import vilgefortzz.edu.grain_growth.growth.Growth;
  */
 public interface EnergyDistribution {
 
+    void calculateEnergy(Growth growth, Grid grid, int energyInside, int energyOnEdges);
     void showEnergy(Growth growth, Grid grid, int energyInside, int energyOnEdges);
+    void showMicrostructure(Growth growth, Grid grid, int energyInside, int energyOnEdges);
 }
