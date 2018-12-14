@@ -214,7 +214,8 @@ public class Grid {
             neighbours.add(getCell(cell.getX(), cell.getY() + 1));
             neighbours.add(getCell(cell.getX() + 1, cell.getY() + 1));
 
-            if (neighbours.stream().anyMatch(neighbour -> neighbour.getState() != cell.getState())) {
+            if (neighbours.stream().anyMatch(neighbour -> !neighbour.isRecrystallized() &&
+                    neighbour.getState() != cell.getState())) {
                 edgeCells.add(cell);
             }
         });

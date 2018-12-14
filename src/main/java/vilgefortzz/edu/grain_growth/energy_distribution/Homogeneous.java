@@ -24,7 +24,11 @@ public class Homogeneous implements EnergyDistribution {
 
         grid.forEachCells(cell -> {
             cell.savePreviousState();
-            cell.setState(Cell.ENERGY_INSIDE_STATE);
+            if (cell.isRecrystallized()) {
+                cell.setState(Cell.RECRYSTALLIZED_STATE);
+            } else {
+                cell.setState(Cell.ENERGY_INSIDE_STATE);
+            }
         });
     }
 
