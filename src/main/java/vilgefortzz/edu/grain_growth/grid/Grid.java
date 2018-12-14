@@ -249,6 +249,10 @@ public class Grid {
         return edgeCells;
     }
 
+    public boolean areAllCellsRecrystallized() {
+        return cells.stream().allMatch(Cell::isRecrystallized);
+    }
+
     public void forEachCells(Consumer<Cell> cell) {
         cells.forEach(cell);
     }

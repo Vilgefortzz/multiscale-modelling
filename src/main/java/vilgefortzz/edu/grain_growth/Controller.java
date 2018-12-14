@@ -426,7 +426,7 @@ public class Controller implements Initializable {
         solver.setEnergyDistribution(energyDistribution);
         solver.setNucleating(nucleating);
         solver.initialize();
-        stepController.initialize();
+        stepController.clearStep();
 
         solver.calculateEnergy(energyInside, energyOnEdges);
         nucleatingButton.setDisable(false);
@@ -653,6 +653,10 @@ public class Controller implements Initializable {
 
                 int numberOfStates = Integer.parseInt(numberOfGrainsText.getText());
                 solver.getGrowth().setType(numberOfStates);
+            }
+
+            if (grid.areAllCellsRecrystallized()) {
+                stop();
             }
 
             if (stepController.isFinished()) {
