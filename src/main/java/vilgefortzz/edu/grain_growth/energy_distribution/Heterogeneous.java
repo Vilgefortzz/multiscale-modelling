@@ -16,12 +16,14 @@ public class Heterogeneous implements EnergyDistribution {
 
         List<Cell> edgeCells = grid.getEdgeCells();
         edgeCells.forEach(edgeCell -> {
-            Cell cell = grid.getCell(edgeCell.getX(), edgeCell.getY());
-            cell.setEnergyDistribution(energyOnEdges);
+            if (!edgeCell.isRecrystallized()) {
+                Cell cell = grid.getCell(edgeCell.getX(), edgeCell.getY());
+                cell.setEnergyDistribution(energyOnEdges);
+            }
         });
 
         grid.forEachCells(cell -> {
-            if (!edgeCells.contains(cell)) {
+            if (!edgeCells.contains(cell) && !cell.isRecrystallized()) {
                 cell.setEnergyDistribution(energyInside);
             }
         });

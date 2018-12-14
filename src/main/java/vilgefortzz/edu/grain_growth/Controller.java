@@ -27,6 +27,7 @@ import vilgefortzz.edu.grain_growth.image.ColorGenerator;
 import vilgefortzz.edu.grain_growth.image.ImageModifier;
 import vilgefortzz.edu.grain_growth.neighbourhood.*;
 import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
+import vilgefortzz.edu.grain_growth.nucleating.RandomEdgeNucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
 import vilgefortzz.edu.grain_growth.nucleation_module.Constant;
 import vilgefortzz.edu.grain_growth.nucleation_module.NucleationModule;
@@ -217,8 +218,9 @@ public class Controller implements Initializable {
                 new FurtherMoore()
         );
 
-        nucleatingComboBox.getItems().add(
-                new RandomNucleating()
+        nucleatingComboBox.getItems().addAll(
+                new RandomNucleating(),
+                new RandomEdgeNucleating()
         );
 
         typeOfInclusionComboBox.getItems().addAll(
@@ -412,14 +414,21 @@ public class Controller implements Initializable {
 
         solver.getGrowth().setGrainBoundaryEnergy(Double.parseDouble(grainBoundaryEnergyText.getText()));
         Growth growth = algorithmComboBox.getSelectionModel().getSelectedItem();
+        Neighbourhood neighbourhood = neighbourhoodComboBox.getSelectionModel().getSelectedItem();
         EnergyDistribution energyDistribution = energyDistributionComboBox.getSelectionModel().getSelectedItem();
+        Nucleating nucleating = nucleatingComboBox.getSelectionModel().getSelectedItem();
+
         int energyInside = Integer.parseInt(energyInsideText.getText());
         int energyOnEdges = Integer.parseInt(energyOnEdgesText.getText());
 
         solver.setGrowth(growth);
+        solver.setNeighbourhood(neighbourhood);
         solver.setEnergyDistribution(energyDistribution);
-        solver.calculateEnergy(energyInside, energyOnEdges);
+        solver.setNucleating(nucleating);
+        solver.initialize();
+        stepController.initialize();
 
+        solver.calculateEnergy(energyInside, energyOnEdges);
         nucleatingButton.setDisable(false);
 
         draw(solver.getGrid());
@@ -436,6 +445,7 @@ public class Controller implements Initializable {
 
         solver.setGrowth(growth);
         solver.setEnergyDistribution(energyDistribution);
+        solver.initialize();
 
         if (!showEnergyToggleButton.isSelected()) {
             solver.showMicrostructure(energyInside, energyOnEdges);

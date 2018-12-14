@@ -13,7 +13,9 @@ public class Homogeneous implements EnergyDistribution {
     public void calculateEnergy(Growth growth, Grid grid, int energyInside, int energyOnEdges) {
 
         grid.forEachCells(cell -> {
-            cell.setEnergyDistribution(energyInside);
+            if (!cell.isRecrystallized()) {
+                cell.setEnergyDistribution(energyInside);
+            }
         });
     }
 

@@ -1,8 +1,8 @@
 package vilgefortzz.edu.grain_growth.nucleating;
 
-import vilgefortzz.edu.grain_growth.growth.Growth;
 import vilgefortzz.edu.grain_growth.grid.Cell;
 import vilgefortzz.edu.grain_growth.grid.Grid;
+import vilgefortzz.edu.grain_growth.growth.Growth;
 
 import java.util.Random;
 
