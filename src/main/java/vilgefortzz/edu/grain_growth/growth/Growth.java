@@ -1,5 +1,7 @@
 package vilgefortzz.edu.grain_growth.growth;
 
+import vilgefortzz.edu.grain_growth.nucleation_module.NucleationModule;
+
 /**
  * Created by vilgefortzz on 07/10/18
  */
@@ -14,6 +16,12 @@ public abstract class Growth implements Algorithm {
      * Monte Carlo grain boundary energy
      */
     protected double grainBoundaryEnergy;
+
+    /**
+     * Monte Carlo static recrystallization
+     */
+    protected NucleationModule nucleationModule;
+    protected int numberOfGrains;
 
     public boolean isFinished() {
         return finished;
@@ -49,5 +57,21 @@ public abstract class Growth implements Algorithm {
 
     protected int createNewType() {
         return ++type;
+    }
+
+    public NucleationModule getNucleationModule() {
+        return nucleationModule;
+    }
+
+    public void setNucleationModule(NucleationModule nucleationModule) {
+        this.nucleationModule = nucleationModule;
+    }
+
+    public int getNumberOfGrains() {
+        return numberOfGrains;
+    }
+
+    public void setNumberOfGrains(int numberOfGrains) {
+        this.numberOfGrains = numberOfGrains;
     }
 }

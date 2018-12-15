@@ -30,8 +30,8 @@ import vilgefortzz.edu.grain_growth.nucleating.Nucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomEdgeNucleating;
 import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
 import vilgefortzz.edu.grain_growth.nucleation_module.Constant;
+import vilgefortzz.edu.grain_growth.nucleation_module.Increasing;
 import vilgefortzz.edu.grain_growth.nucleation_module.NucleationModule;
-import vilgefortzz.edu.grain_growth.nucleation_module.SiteSaturated;
 import vilgefortzz.edu.grain_growth.structure.DualPhase;
 import vilgefortzz.edu.grain_growth.structure.Structure;
 import vilgefortzz.edu.grain_growth.structure.Substructure;
@@ -152,7 +152,7 @@ public class Controller implements Initializable {
     private Button selectGrainsButton;
 
     /**
-     * MC Static recrystalization
+     * MC Static recrystallization
      */
     @FXML
     public ComboBox<EnergyDistribution> energyDistributionComboBox;
@@ -245,8 +245,8 @@ public class Controller implements Initializable {
         );
 
         nucleationModuleComboBox.getItems().addAll(
-                new SiteSaturated(),
-                new Constant()
+                new Constant(),
+                new Increasing()
         );
 
         algorithmComboBox.getSelectionModel().selectFirst();
@@ -417,14 +417,20 @@ public class Controller implements Initializable {
         Neighbourhood neighbourhood = neighbourhoodComboBox.getSelectionModel().getSelectedItem();
         EnergyDistribution energyDistribution = energyDistributionComboBox.getSelectionModel().getSelectedItem();
         Nucleating nucleating = nucleatingComboBox.getSelectionModel().getSelectedItem();
+        NucleationModule nucleationModule = nucleationModuleComboBox.getSelectionModel().getSelectedItem();
 
         int energyInside = Integer.parseInt(energyInsideText.getText());
         int energyOnEdges = Integer.parseInt(energyOnEdgesText.getText());
+        int numberOfGrains = Integer.parseInt(numberOfGrainsText.getText());
+
+        nucleationModule.setProperties(numberOfGrains, nucleating);
 
         solver.setGrowth(growth);
         solver.setNeighbourhood(neighbourhood);
         solver.setEnergyDistribution(energyDistribution);
         solver.setNucleating(nucleating);
+        solver.getGrowth().setNucleationModule(nucleationModule);
+
         solver.initialize();
         stepController.clearStep();
 
@@ -668,6 +674,7 @@ public class Controller implements Initializable {
                 grainSelectionComboBox.setDisable(false);
                 selectGrainsButton.setDisable(false);
                 energyDistributionComboBox.setDisable(false);
+                nucleationModuleComboBox.setDisable(false);
                 calculateEnergyButton.setDisable(false);
                 showEnergyToggleButton.setDisable(false);
             }

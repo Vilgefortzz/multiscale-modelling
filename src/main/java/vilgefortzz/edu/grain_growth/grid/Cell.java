@@ -60,6 +60,10 @@ public class Cell {
         this.state = this.previousState;
     }
 
+    public void clearEnergyDistribution() {
+        this.energyDistribution = 0;
+    }
+
     public int getX() {
         return x;
     }

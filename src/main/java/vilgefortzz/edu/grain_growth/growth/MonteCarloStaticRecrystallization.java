@@ -67,6 +67,9 @@ public class MonteCarloStaticRecrystallization extends Growth {
                 remainingCells.remove(randomCell);
             }
 
+            // Add nucleons during SRXMC step
+            nucleationModule.addNucleons(this, grid);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,7 +81,7 @@ public class MonteCarloStaticRecrystallization extends Growth {
         if (cell.getState() != Cell.RECRYSTALLIZED_STATE) {
             cell.setState(Cell.RECRYSTALLIZED_STATE);
             cell.setRecrystallized(true);
-            cell.setEnergyDistribution(0);
+            cell.clearEnergyDistribution();
         }
     }
 
