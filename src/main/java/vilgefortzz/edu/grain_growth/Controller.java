@@ -32,6 +32,7 @@ import vilgefortzz.edu.grain_growth.nucleating.RandomNucleating;
 import vilgefortzz.edu.grain_growth.nucleation_module.Constant;
 import vilgefortzz.edu.grain_growth.nucleation_module.Increasing;
 import vilgefortzz.edu.grain_growth.nucleation_module.NucleationModule;
+import vilgefortzz.edu.grain_growth.nucleation_module.SiteSaturated;
 import vilgefortzz.edu.grain_growth.structure.DualPhase;
 import vilgefortzz.edu.grain_growth.structure.Structure;
 import vilgefortzz.edu.grain_growth.structure.Substructure;
@@ -245,6 +246,7 @@ public class Controller implements Initializable {
         );
 
         nucleationModuleComboBox.getItems().addAll(
+                new SiteSaturated(),
                 new Constant(),
                 new Increasing()
         );
@@ -424,6 +426,7 @@ public class Controller implements Initializable {
         int numberOfGrains = Integer.parseInt(numberOfGrainsText.getText());
 
         nucleationModule.setProperties(numberOfGrains, nucleating);
+        growth.setType(solver.getGrowth().getType());
 
         solver.setGrowth(growth);
         solver.setNeighbourhood(neighbourhood);
@@ -659,6 +662,11 @@ public class Controller implements Initializable {
 
                 int numberOfStates = Integer.parseInt(numberOfGrainsText.getText());
                 solver.getGrowth().setType(numberOfStates);
+
+                energyDistributionComboBox.setDisable(false);
+                nucleationModuleComboBox.setDisable(false);
+                calculateEnergyButton.setDisable(false);
+                showEnergyToggleButton.setDisable(false);
             }
 
             if (grid.areAllCellsRecrystallized()) {
@@ -696,7 +704,7 @@ public class Controller implements Initializable {
 
     private void drawSquareCells(Grid grid) {
         grid.forEachCells(cell -> {
-            graphicsContext.setFill(ColorGenerator.getColor(cell.getState()));
+            graphicsContext.setFill(ColorGenerator.getColor(cell.getState(), cell.isRecrystallized()));
             graphicsContext.fillRect(
                     cell.getX() * cellSize,
                     cell.getY() * cellSize,
@@ -708,7 +716,7 @@ public class Controller implements Initializable {
 
     private void drawCircularCells(Grid grid) {
         grid.forEachCells(cell -> {
-            graphicsContext.setFill(ColorGenerator.getColor(cell.getState()));
+            graphicsContext.setFill(ColorGenerator.getColor(cell.getState(), cell.isRecrystallized()));
             if (cell.getState() == Cell.INCLUSION_STATE && cell.getType() == Cell.SQUARE_TYPE) {
                 graphicsContext.fillRect(
                         cell.getX() * cellSize,

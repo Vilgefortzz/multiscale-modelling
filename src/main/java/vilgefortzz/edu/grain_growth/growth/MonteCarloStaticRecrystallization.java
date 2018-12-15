@@ -78,8 +78,8 @@ public class MonteCarloStaticRecrystallization extends Growth {
     @Override
     public void changeState(Cell cell) {
 
-        if (cell.getState() != Cell.RECRYSTALLIZED_STATE) {
-            cell.setState(Cell.RECRYSTALLIZED_STATE);
+        if (!cell.isRecrystallized()) {
+            cell.setState(createNewType());
             cell.setRecrystallized(true);
             cell.clearEnergyDistribution();
         }
